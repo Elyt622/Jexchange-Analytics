@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/search_offers"
+        android:title="@string/search_offers"
+        android:icon="@drawable/ic_search_24px"/>
+
+    <item
+        android:id="@+id/pair_trading"
+        android:title="@string/pair_trading"
+        android:icon="@drawable/ic_compare_arrows_24px"/>
+
+    <item
+        android:id="@+id/staking"
+        android:title="@string/staking"
+        android:icon="@drawable/ic_electric_bolt_24px"/>
+
+    <item
+        android:id="@+id/analytics"
+        android:title="@string/analytics"
+        android:icon="@drawable/ic_query_stats_24px"/>
+
+    <item
+        android:id="@+id/community"
+        android:title="@string/community"
+        android:icon="@drawable/ic_groups_24px"/>
+</menu>
