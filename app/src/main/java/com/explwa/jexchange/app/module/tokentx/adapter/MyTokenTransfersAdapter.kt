@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.explwa.jexchange.R
 import com.explwa.jexchange.app.module.utils.Utils
-import com.explwa.jexchange.data.response.transactions.TransactionsResponse
+import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.databinding.ViewHolderMyTokenTransferBinding
 
 
