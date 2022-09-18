@@ -12,4 +12,7 @@
     <string name="staking_rewards">Staking Rewards</string>
     <string name="trade_your_token_on">Trade Your Token On</string>
     <string name="app_jexchange_io">app.jexchange.io</string>
+    <string name="your_address_or_herotag">Your address or herotag</string>
+    <string name="check">CHECK</string>
+    <string name="beniaminmincu">beniaminmincu</string>
 </resources>
