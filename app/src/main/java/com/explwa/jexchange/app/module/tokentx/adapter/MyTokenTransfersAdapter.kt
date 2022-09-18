@@ -32,8 +32,8 @@ class MyTokenTransfersAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.dateTransfer.text = Utils().getDateTime(data[position].timestamp.toString())
-        holder.amountToken.text = Utils().toStringFormat(
+        holder.dateTransfer.text = Utils.getDateTime(data[position].timestamp.toString())
+        holder.amountToken.text = Utils.toStringFormat(
             data[position].action?.argumentsResponse?.transfers?.get(0)?.value.toString(),
             data[position].action?.argumentsResponse?.transfers?.get(0)?.decimals
         )
@@ -45,7 +45,7 @@ class MyTokenTransfersAdapter(
                 holder.amountToken.setTextColor(
                     Color.parseColor("#FFFFFF")
                 )
-                holder.action.text = "TO STAKING"
+                holder.action.text = context.resources.getText(R.string.staking)
             }
             "fill_offer" -> {
                 holder.amountToken.setTextColor(
