@@ -7,4 +7,7 @@
     <string name="analytics">Analytics</string>
     <string name="community">Community</string>
     <string name="home">Home</string>
+    <string name="sold">Sold</string>
+    <string name="token_image">Token image</string>
+    <string name="staking_rewards">Staking Rewards</string>
 </resources>
