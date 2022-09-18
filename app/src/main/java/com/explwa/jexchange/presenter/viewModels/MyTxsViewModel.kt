@@ -2,25 +2,41 @@ package com.explwa.jexchange.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.explwa.jexchange.app.domain.repositories.TransactionsRepository
-import com.explwa.jexchange.data.response.transactions.TransactionsResponse
+import com.explwa.jexchange.data.response.elrond.TransactionsResponse
+import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import java.math.BigInteger
 import javax.inject.Inject
 
 @HiltViewModel
 class MyTxsViewModel @Inject constructor(
-    private val transactionsRepository: TransactionsRepository
-) : ViewModel() {
+    private val transactionsRepository: TransactionsRepository,
+    private val mySchedulers: MySchedulers
+    ) : ViewModel() {
 
-    fun getMyJexTransfers() : Single<List<TransactionsResponse>> {
-        return transactionsRepository.getMyJexTransfers()
+    fun getMyTokenTransfers(address: String) : Single<List<TransactionsResponse>> {
+        return transactionsRepository.getAddressWithUsername(address)
+            .flatMap { username ->
+                transactionsRepository.getMyTokenTransfersCount(username.address.toString())
+                    .flatMap { size ->
+                        transactionsRepository.getMyTokenTransfers(username.address.toString(), size)
+                }
+            }.onErrorResumeNext {
+                transactionsRepository.getMyTokenTransfersCount(address)
+                    .flatMap { size ->
+                        transactionsRepository.getMyTokenTransfers(address, size)
+                    }
+            }.doOnError {
+                if (address.isNotEmpty())
+                    throw Exception("INVALID_ADDRESS")
+            }
+            .subscribeOn(mySchedulers.io)
+            .observeOn(mySchedulers.main)
     }
-
+/*
     fun getMyStakingJex() : Observable<BigInteger> {
         var int = BigInteger("0")
-        return transactionsRepository.getMyJexTransfers()
+        return transactionsRepository.getMyTokenTransfers()
             .toObservable()
             .map {
                 for (element in it)
@@ -33,7 +49,7 @@ class MyTxsViewModel @Inject constructor(
 
     fun getMySoldJex() : Observable<BigInteger> {
         var int = BigInteger("0")
-        return transactionsRepository.getMyJexTransfers()
+        return transactionsRepository.getMyTokenTransfers()
             .toObservable()
             .map {
                 for (element in it)
@@ -43,5 +59,5 @@ class MyTxsViewModel @Inject constructor(
                 return@flatMap Observable.just(int)
             }
     }
-
+*/
 }
