@@ -1,4 +1,4 @@
-package com.explwa.jexchange.data.response.username
+package com.explwa.jexchange.data.response.elrond
 
 import com.google.gson.annotations.SerializedName
 

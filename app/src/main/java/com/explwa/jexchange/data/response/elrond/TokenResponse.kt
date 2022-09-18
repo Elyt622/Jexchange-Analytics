@@ -1,9 +1,9 @@
-package com.explwa.jexchange.data.response.staking
+package com.explwa.jexchange.data.response.elrond
 
 import com.google.gson.annotations.SerializedName
 
 
-data class StakingResponse (
+data class TokenResponse (
 
     @SerializedName("identifier"        ) var identifier        : String?  = null,
     @SerializedName("name"              ) var name              : String?  = null,
