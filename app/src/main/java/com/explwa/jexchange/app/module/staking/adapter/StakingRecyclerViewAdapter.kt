@@ -1,20 +1,19 @@
 package com.explwa.jexchange.app.module.staking.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.explwa.jexchange.data.response.staking.StakingResponse
+import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.databinding.ViewHolderStakingBinding
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.RoundingMode
 
 class StakingRecyclerViewAdapter(
-    private val data: List<StakingResponse>
+    private val data: List<TokenResponse>
 ) : RecyclerView.Adapter<StakingRecyclerViewAdapter.ViewHolder>() {
 
     private lateinit var binding : ViewHolderStakingBinding
