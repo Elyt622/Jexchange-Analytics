@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_jex_logo"/>
+
+    <item
+        android:id="@+id/analytics"
+        android:title="@string/analytics"
+        android:icon="@drawable/ic_query_stats_24px"/>
+
+    <item
+        android:id="@+id/staking"
+        android:title="@string/staking"
+        android:icon="@drawable/ic_electric_bolt_24px"/>
+
+</menu>
