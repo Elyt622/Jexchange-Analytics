@@ -14,6 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_jex_logo"
         android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/Theme.Jexchange"
         tools:targetApi="31">
         <activity
