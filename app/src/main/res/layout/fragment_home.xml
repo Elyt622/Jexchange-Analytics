@@ -10,6 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:text="@string/trade_your_token_on"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_toolbar" />
+
+        <TextView
+            android:id="@+id/textview_link_exchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/greenJex"
+            android:text="@string/app_jexchange_io"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/top_toolbar"
             android:layout_width="match_parent"
@@ -45,12 +70,12 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_toolbar">
+            app:layout_constraintTop_toBottomOf="@+id/textview_link_exchange">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout"
@@ -85,15 +110,16 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView2"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_toolbar">
+            app:layout_constraintTop_toBottomOf="@+id/textview_link_exchange">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout2"

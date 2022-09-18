@@ -10,4 +10,6 @@
     <string name="sold">Sold</string>
     <string name="token_image">Token image</string>
     <string name="staking_rewards">Staking Rewards</string>
+    <string name="trade_your_token_on">Trade Your Token On</string>
+    <string name="app_jexchange_io">app.jexchange.io</string>
 </resources>

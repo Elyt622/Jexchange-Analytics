@@ -1,5 +1,7 @@
 package com.explwa.jexchange.app.module.home.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        with(binding) {
+            textviewLinkExchange.setOnClickListener {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://"+textviewLinkExchange.text.toString())
+                    )
+                )
+            }
+        }
     }
 
 }
