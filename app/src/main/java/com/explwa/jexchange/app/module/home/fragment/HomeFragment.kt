@@ -8,9 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.explwa.jexchange.app.module.home.adapter.TokenRecyclerViewAdapter
 import com.explwa.jexchange.databinding.FragmentHomeBinding
 import com.explwa.jexchange.presenter.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.kotlin.subscribeBy
 
 
 @AndroidEntryPoint
@@ -34,7 +37,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        configRecyclerView()
         with(binding) {
             textviewLinkExchange.setOnClickListener {
                 startActivity(
@@ -44,6 +47,16 @@ class HomeFragment : Fragment() {
                     )
                 )
             }
+        }
+    }
+
+    private fun configRecyclerView() {
+        with(binding) {
+            recyclerViewTokens.layoutManager = LinearLayoutManager(requireContext())
+            viewModel.getAllTokensOnJexchange()
+                .subscribeBy {
+                    recyclerViewTokens.adapter = TokenRecyclerViewAdapter(it)
+                }
         }
     }
 
