@@ -15,4 +15,5 @@
     <string name="your_address_or_herotag">Your address or herotag</string>
     <string name="check">CHECK</string>
     <string name="herotag">herotag</string>
+    <string name="dollar_sign">$</string>
 </resources>
