@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.explwa.jexchange.app.module.utils.Utils
 import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.databinding.ViewHolderTokensBinding
 
@@ -31,7 +32,7 @@ class TokenListAdapter(
         with(holder){
             Glide.with(context).load(data[position].assets?.pngUrl).into(imageToken)
             identifier.text = data[position].identifier
-            price.text = data[position].price.toString()
+            price.text = Utils.toFormatString(data[position].price.toString())
             name.text = data[position].name
         }
     }
