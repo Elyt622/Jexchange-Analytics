@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.explwa.jexchange.app.module.home.adapter.TokensAdapter
+import com.explwa.jexchange.app.module.home.adapter.TokenListAdapter
 import com.explwa.jexchange.databinding.FragmentHomeBinding
 import com.explwa.jexchange.presenter.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
             recyclerViewTokens.layoutManager = LinearLayoutManager(requireContext())
             viewModel.getAllTokensOnJexchange()
                 .subscribeBy {
-                    recyclerViewTokens.adapter = TokensAdapter(it)
+                    recyclerViewTokens.adapter = TokenListAdapter(it)
                 }
         }
     }

@@ -12,9 +12,9 @@ import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.databinding.ViewHolderMyTokenTransferBinding
 
 
-class MyTxsAdapter(
+class MyTxsListAdapter(
     private val data: List<TransactionsResponse>
-) : RecyclerView.Adapter<MyTxsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MyTxsListAdapter.ViewHolder>() {
 
     private lateinit var binding : ViewHolderMyTokenTransferBinding
 

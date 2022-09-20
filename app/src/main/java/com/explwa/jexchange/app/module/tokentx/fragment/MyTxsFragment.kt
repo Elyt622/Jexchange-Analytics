@@ -9,7 +9,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.explwa.jexchange.app.module.tokentx.adapter.MyTxsAdapter
+import com.explwa.jexchange.app.module.tokentx.adapter.MyTxsListAdapter
 import com.explwa.jexchange.databinding.FragmentMyTxsBinding
 import com.explwa.jexchange.presenter.viewModels.MyTxsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +43,7 @@ class MyTxsFragment : Fragment() {
             viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString())
                 .subscribeBy (
                     onSuccess = { txsList ->
-                        binding.rvMyTransactions.adapter = MyTxsAdapter(txsList)
+                        binding.rvMyTransactions.adapter = MyTxsListAdapter(txsList)
                         binding.constraintLayoutStaking.isGone = false
                         binding.constraintLayoutHerotagAddress.isGone = true
                     },
@@ -64,7 +64,7 @@ class MyTxsFragment : Fragment() {
 
     private fun configRecyclerView() {
         binding.rvMyTransactions.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvMyTransactions.adapter = MyTxsAdapter(listOf())
+        binding.rvMyTransactions.adapter = MyTxsListAdapter(listOf())
     }
 
 }

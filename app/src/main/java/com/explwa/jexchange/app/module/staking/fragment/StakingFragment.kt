@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.explwa.jexchange.app.module.staking.adapter.StakingRecyclerViewAdapter
+import com.explwa.jexchange.app.module.staking.adapter.StakingListAdapter
 import com.explwa.jexchange.databinding.FragmentStakingBinding
 import com.explwa.jexchange.presenter.viewModels.StakingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +47,7 @@ class StakingFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    recyclerViewStakingRewards.adapter = StakingRecyclerViewAdapter(it)
+                    recyclerViewStakingRewards.adapter = StakingListAdapter(it)
                 }
         }
     }

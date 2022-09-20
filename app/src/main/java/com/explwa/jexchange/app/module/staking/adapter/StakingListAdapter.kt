@@ -12,9 +12,9 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.RoundingMode
 
-class StakingRecyclerViewAdapter(
+class StakingListAdapter(
     private val data: List<TokenResponse>
-) : RecyclerView.Adapter<StakingRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<StakingListAdapter.ViewHolder>() {
 
     private lateinit var binding : ViewHolderStakingBinding
 
