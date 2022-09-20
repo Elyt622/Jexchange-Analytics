@@ -20,8 +20,8 @@ class HomeViewModel @Inject constructor(
         val progressBarVisibility : Boolean
     )
 
-    class HomeViewModelStateLoading : HomeViewModelStateSealed(listOf(), true)
-    class HomeViewModelStateSuccess(tokens: List<TokenResponse>) : HomeViewModelStateSealed(tokens, false)
+    class HomeViewModelStateLoading : HomeViewModelStateSealed(listOf(), false)
+    class HomeViewModelStateSuccess(tokens: List<TokenResponse>) : HomeViewModelStateSealed(tokens, true)
 
     fun getAllTokensOnJexchange(): Single<List<TokenResponse>> {
         return repository.getTokensCountOnJexchange()
