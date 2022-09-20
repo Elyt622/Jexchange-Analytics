@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="greenJex">#058883</color>
+    <color name="nightBackground">#1A1E29</color>
+    <color name="nightBar">#232937</color>
+
 </resources>
