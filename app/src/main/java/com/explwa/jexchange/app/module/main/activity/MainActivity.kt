@@ -1,11 +1,11 @@
-package com.explwa.jexchange.app.module.activity
+package com.explwa.jexchange.app.module.main.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.explwa.jexchange.R
-import com.explwa.jexchange.app.module.adapter.ViewpagerAdapter
+import com.explwa.jexchange.app.module.main.adapter.ViewpagerAdapter
 import com.explwa.jexchange.databinding.ActivityMainBinding
 import com.explwa.jexchange.presenter.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint

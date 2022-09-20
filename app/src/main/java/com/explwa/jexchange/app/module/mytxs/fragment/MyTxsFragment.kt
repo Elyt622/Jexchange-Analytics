@@ -1,4 +1,4 @@
-package com.explwa.jexchange.app.module.tokentx.fragment
+package com.explwa.jexchange.app.module.mytxs.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.explwa.jexchange.app.module.tokentx.adapter.MyTxsListAdapter
+import com.explwa.jexchange.app.module.mytxs.adapter.MyTxsListAdapter
 import com.explwa.jexchange.databinding.FragmentMyTxsBinding
 import com.explwa.jexchange.presenter.viewModels.MyTxsViewModel
 import dagger.hilt.android.AndroidEntryPoint

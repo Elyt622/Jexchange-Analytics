@@ -1,4 +1,4 @@
-package com.explwa.jexchange.app.module.tokentx.adapter
+package com.explwa.jexchange.app.module.mytxs.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -33,10 +33,10 @@ class MyTxsListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.dateTransfer.text = Utils.getDateTime(data[position].timestamp.toString())
-        holder.amountToken.text = Utils.toStringFormat(
-            data[position].action?.argumentsResponse?.transfers?.get(0)?.value.toString(),
+        holder.amountToken.text = Utils.fromBigIntegerToBigDecimal(
+            data[position].action?.argumentsResponse?.transfers?.get(0)?.value,
             data[position].action?.argumentsResponse?.transfers?.get(0)?.decimals
-        )
+        ).toPlainString()
 
         holder.nameToken.text = data[position].action?.argumentsResponse?.transfers?.get(0)?.ticker.toString()
 
