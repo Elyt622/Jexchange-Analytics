@@ -15,6 +15,14 @@ class HomeViewModel @Inject constructor(
     private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
+    sealed class HomeViewModelStateSealed (
+        val tokens : List<TokenResponse>,
+        val progressBarVisibility : Boolean
+    )
+
+    class HomeViewModelStateLoading : HomeViewModelStateSealed(listOf(), true)
+    class HomeViewModelStateSuccess(tokens: List<TokenResponse>) : HomeViewModelStateSealed(tokens, false)
+
     fun getAllTokensOnJexchange(): Single<List<TokenResponse>> {
         return repository.getTokensCountOnJexchange()
             .flatMap { repository.getAllTokensOnJexchange(it) }

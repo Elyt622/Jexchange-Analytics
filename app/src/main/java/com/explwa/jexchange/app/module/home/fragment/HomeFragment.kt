@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,12 +41,22 @@ class HomeFragment : Fragment() {
         configRecyclerView()
         with(binding) {
             textviewLinkExchange.setOnClickListener {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://"+textviewLinkExchange.text.toString())
-                    )
-                )
+                launchJexchangeOnBrowser()
+            }
+        }
+        loadTokens()
+    }
+
+    private fun updateUi(state : HomeViewModel.HomeViewModelStateSealed) {
+        with(binding) {
+            when (state) {
+                is HomeViewModel.HomeViewModelStateLoading -> {
+                    progressCircular.isGone = state.progressBarVisibility
+                }
+                is HomeViewModel.HomeViewModelStateSuccess -> {
+                    progressCircular.isGone = state.progressBarVisibility
+                    recyclerViewTokens.adapter = TokenListAdapter(state.tokens)
+                }
             }
         }
     }
@@ -53,11 +64,25 @@ class HomeFragment : Fragment() {
     private fun configRecyclerView() {
         with(binding) {
             recyclerViewTokens.layoutManager = LinearLayoutManager(requireContext())
-            viewModel.getAllTokensOnJexchange()
-                .subscribeBy {
-                    recyclerViewTokens.adapter = TokenListAdapter(it)
-                }
+            recyclerViewTokens.adapter = TokenListAdapter(listOf())
         }
     }
 
+    private fun loadTokens() {
+        viewModel.getAllTokensOnJexchange()
+            .subscribeBy {
+                updateUi(HomeViewModel.HomeViewModelStateSuccess(it))
+            }
+    }
+
+    private fun launchJexchangeOnBrowser() {
+        with(binding) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://" + textviewLinkExchange.text.toString())
+                )
+            )
+        }
+    }
 }
