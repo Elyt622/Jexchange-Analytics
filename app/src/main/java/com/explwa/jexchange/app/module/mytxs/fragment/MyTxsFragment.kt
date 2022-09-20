@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,27 +40,53 @@ class MyTxsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
+
         binding.buttonCheckHerotagAddress.setOnClickListener {
+            updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
             viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString())
                 .subscribeBy (
                     onSuccess = { txsList ->
-                        binding.rvMyTransactions.adapter = MyTxsListAdapter(txsList)
-                        binding.constraintLayoutStaking.isGone = false
-                        binding.constraintLayoutHerotagAddress.isGone = true
+                        updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
                     },
                     onError = {
-                        binding.constraintLayoutStaking.isGone = true
-                        binding.constraintLayoutHerotagAddress.isGone = false
-                        Toast.makeText(
-                            requireActivity(),
-                            "The address or herotag is invalid",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
+                        updateUi(MyTxsViewModel.MyTxsViewModelStateError(
+                            "The address or herotag is invalid")
+                        )
                     }
                 )
         }
+    }
 
-
+    private fun updateUi(state : MyTxsViewModel.MyTxsViewModelStateSealed) {
+        with(binding) {
+            when (state) {
+                is MyTxsViewModel.MyTxsViewModelStateLogin -> {
+                    constraintLayoutHerotagAddress.isGone = state.loginIsGone
+                    progressCircular.isGone = state.progressBarIsGone
+                    rvMyTransactions.isGone = true
+                }
+                is MyTxsViewModel.MyTxsViewModelStateLoading -> {
+                    progressCircular.isGone = state.progressBarIsGone
+                    constraintLayoutHerotagAddress.isGone = state.loginIsGone
+                    rvMyTransactions.isGone = true
+                }
+                is MyTxsViewModel.MyTxsViewModelStateSuccess -> {
+                    rvMyTransactions.adapter = MyTxsListAdapter(state.myTxs)
+                    progressCircular.isGone = state.progressBarIsGone
+                    rvMyTransactions.isGone = false
+                    constraintLayoutHerotagAddress.isGone = state.loginIsGone
+                }
+                is MyTxsViewModel.MyTxsViewModelStateError -> {
+                    Toast.makeText(
+                        requireActivity(),
+                        state.errorMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun configRecyclerView() {

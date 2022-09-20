@@ -14,6 +14,18 @@ class MyTxsViewModel @Inject constructor(
     private val mySchedulers: MySchedulers
     ) : ViewModel() {
 
+    sealed class MyTxsViewModelStateSealed(
+        val loginIsGone : Boolean,
+        val myTxs : List<TransactionsResponse>,
+        val progressBarIsGone: Boolean,
+    )
+
+    class MyTxsViewModelStateLoading : MyTxsViewModelStateSealed(true, listOf(), false)
+    class MyTxsViewModelStateSuccess(myTxs : List<TransactionsResponse>) : MyTxsViewModelStateSealed(true, myTxs, true)
+    class MyTxsViewModelStateLogin : MyTxsViewModelStateSealed(false, listOf(), true)
+    class MyTxsViewModelStateError(val errorMessage: String) : MyTxsViewModelStateSealed(false, listOf(), true)
+
+
     fun getMyTokenTransfers(address: String) : Single<List<TransactionsResponse>> {
         return transactionsRepository.getAddressWithUsername(address)
             .flatMap { username ->
