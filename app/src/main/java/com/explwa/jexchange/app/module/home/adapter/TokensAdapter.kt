@@ -9,9 +9,9 @@ import com.bumptech.glide.Glide
 import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.databinding.ViewHolderTokensBinding
 
-class TokenRecyclerViewAdapter(
+class TokensAdapter(
     private val data: List<TokenResponse>
-) : RecyclerView.Adapter<TokenRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<TokensAdapter.ViewHolder>() {
 
     private lateinit var binding : ViewHolderTokensBinding
 
