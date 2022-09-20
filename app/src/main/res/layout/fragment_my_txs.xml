@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            android:hint="@string/beniaminmincu"
+            android:hint="@string/herotag"
             android:autofillHints="username" />
 
         <Button
