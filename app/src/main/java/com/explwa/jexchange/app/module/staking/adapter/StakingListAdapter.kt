@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.explwa.jexchange.app.module.utils.Utils
 import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.databinding.ViewHolderStakingBinding
 import java.math.BigDecimal
-import java.math.BigInteger
 import java.math.RoundingMode
 
 class StakingListAdapter(
@@ -34,28 +34,24 @@ class StakingListAdapter(
         with(holder) {
             Glide.with(context).load(data[position].assets?.pngUrl).into(imageToken)
             nameToken.text = data[position].identifier?.substringBefore('-')
-            numberToken.text = convertBigIntegerToBigDecimal(
-                divideBigIntegerBy2(
-                    data[position].balance!!
-                ), data[position].decimals!!).toString()
+            numberToken.text =
+                Utils.fromBigIntegerToBigDecimal(
+                    Utils.divideBigIntegerBy2(
+                        data[position].balance),
+                    data[position].decimals
+                ).toPlainString()
 
             if(data[position].price != null)
                 tokenPrice.text =
-                    (convertBigIntegerToBigDecimal(
-                        divideBigIntegerBy2(data[position].balance!!),
-                        data[position].decimals!!
-                    ) * BigDecimal(data[position].price!!)
-                        .setScale(2, RoundingMode.DOWN))
-                        .toString()
+                    (Utils.fromBigIntegerToBigDecimal(
+                        Utils.divideBigIntegerBy2(
+                            data[position].balance!!
+                        ), data[position].decimals
+                    ) * BigDecimal(
+                        data[position].price!!)
+                            ).setScale(2, RoundingMode.DOWN)
+                        .toPlainString()
         }
-    }
-
-    private fun divideBigIntegerBy2(string: String) : BigInteger{
-        return BigInteger(string).divide(BigInteger("2"))
-    }
-
-    private fun convertBigIntegerToBigDecimal(bigInteger: BigInteger, decimals: Int) : BigDecimal {
-        return BigDecimal(bigInteger,decimals).setScale(2, RoundingMode.DOWN)
     }
 
     override fun getItemCount(): Int {

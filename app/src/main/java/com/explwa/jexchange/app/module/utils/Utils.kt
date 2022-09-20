@@ -2,12 +2,21 @@ package com.explwa.jexchange.app.module.utils
 
 import java.lang.StringBuilder
 import java.math.BigDecimal
+import java.math.BigInteger
 import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 object Utils {
+
+    fun divideBigIntegerBy2(string: String?) : BigInteger {
+        return BigInteger(string.toString()).divide(BigInteger("2"))
+    }
+
+    fun fromBigIntegerToBigDecimal(bigInteger: BigInteger, decimals: Int?) : BigDecimal {
+        return BigDecimal(bigInteger, decimals!!).setScale(2, RoundingMode.DOWN)
+    }
 
     fun toFormatString(bigNumberStr: String?) : String {
         return if (bigNumberStr != "null") {
