@@ -1,4 +1,4 @@
-package com.explwa.jexchange.app.domain.repositories
+package com.explwa.jexchange.domain.repositories
 
 import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse

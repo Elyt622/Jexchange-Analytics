@@ -1,7 +1,7 @@
 package com.explwa.jexchange.app.di.repository
 
-import com.explwa.jexchange.app.domain.repositories.StakingRepository
-import com.explwa.jexchange.app.domain.repositories.TransactionsRepository
+import com.explwa.jexchange.domain.repositories.StakingRepository
+import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import com.explwa.jexchange.data.repositories.StakingRepositoryImpl
 import com.explwa.jexchange.data.repositories.TransactionsRepositoryImpl
 import dagger.Binds

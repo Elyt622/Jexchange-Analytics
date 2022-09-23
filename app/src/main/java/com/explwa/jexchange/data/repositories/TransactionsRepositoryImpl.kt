@@ -1,6 +1,6 @@
 package com.explwa.jexchange.data.repositories
 
-import com.explwa.jexchange.app.domain.repositories.TransactionsRepository
+import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import com.explwa.jexchange.data.network.api.ElrondApi
 import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse

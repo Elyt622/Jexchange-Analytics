@@ -1,12 +1,11 @@
 package com.explwa.jexchange.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.explwa.jexchange.app.domain.repositories.TransactionsRepository
+import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.kotlin.subscribeBy
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,13 +14,13 @@ class HomeViewModel @Inject constructor(
     private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
-    sealed class HomeViewModelStateSealed (
+    sealed class ViewState (
         val tokens : List<TokenResponse>,
         val progressBarVisibility : Boolean
     )
 
-    class HomeViewModelStateLoading : HomeViewModelStateSealed(listOf(), false)
-    class HomeViewModelStateSuccess(tokens: List<TokenResponse>) : HomeViewModelStateSealed(tokens, true)
+    class HomeViewModelStateLoading : ViewState(listOf(), false)
+    class HomeViewModelStateSuccess(tokens: List<TokenResponse>) : ViewState(tokens, true)
 
     fun getAllTokensOnJexchange(): Single<List<TokenResponse>> {
         return repository.getTokensCountOnJexchange()

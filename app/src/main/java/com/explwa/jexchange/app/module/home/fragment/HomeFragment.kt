@@ -38,17 +38,20 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         updateUi(HomeViewModel.HomeViewModelStateLoading())
+        loadTokens()
+
         configRecyclerView()
+
         with(binding) {
             textviewLinkExchange.setOnClickListener {
                 launchJexchangeOnBrowser()
             }
         }
-        loadTokens()
     }
 
-    private fun updateUi(state : HomeViewModel.HomeViewModelStateSealed) {
+    private fun updateUi(state : HomeViewModel.ViewState) {
         with(binding) {
             when (state) {
                 is HomeViewModel.HomeViewModelStateLoading -> {
