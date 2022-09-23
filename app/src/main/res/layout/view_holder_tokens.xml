@@ -6,21 +6,23 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="15dp"
-        app:rippleColor="@color/white"
         android:clickable="true"
-        app:cardMaxElevation="20dp"
-        app:cardElevation="20dp"
+        android:focusable="true"
         app:cardBackgroundColor="@color/nightBar"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:focusable="true">
+        app:rippleColor="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout"
@@ -76,6 +78,7 @@
                 android:id="@+id/textview_price_token"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
