@@ -1,5 +1,6 @@
 package com.explwa.jexchange.app.module.home.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class TokenListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
             Glide.with(context).load(data[position].assets?.pngUrl).into(imageToken)
+            Glide.with(context).load(data[position].assets?.pngUrl).into(logoBackground)
             identifier.text = data[position].identifier
             price.text = Utils.toFormatString(data[position].price.toString())
             name.text = data[position].name
@@ -46,6 +48,7 @@ class TokenListAdapter(
         val name = binding.textviewTokenName
         val price = binding.textviewPriceToken
         val imageToken = binding.imageViewToken
+        val logoBackground = binding.imageViewLogoBackground
     }
 
 }
