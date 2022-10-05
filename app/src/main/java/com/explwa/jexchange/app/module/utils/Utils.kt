@@ -18,6 +18,12 @@ object Utils {
         return BigDecimal(bigInteger, decimals!!).setScale(2, RoundingMode.DOWN)
     }
 
+    fun fromBigIntegerToBigDecimal(bigIntegerStr: String?, decimals: Int?) : BigDecimal {
+
+        val bigInteger = BigInteger(bigIntegerStr!!)
+        return BigDecimal(bigInteger, decimals!!).setScale(2, RoundingMode.DOWN)
+    }
+
     fun toFormatString(bigNumberStr: String?) : String {
         return if (bigNumberStr != "null") {
             autoScaleBigDecimal(bigNumberStr)
