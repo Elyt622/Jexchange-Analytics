@@ -14,11 +14,14 @@ interface TransactionsRepository {
 
     fun getJexTransactions() : Single<List<TransactionsResponse>>
 
-    fun getMyTokenTransfers(address: String, size: Int) : Single<List<TransactionsResponse>>
+    fun getMyTokenTransfers(address: String, token: String, size: Int) : Single<List<TransactionsResponse>>
 
-    fun getMyTokenTransfersCount(address: String) : Single<Int>
+    fun getMyTokenTransfersCount(address: String, token: String) : Single<Int>
 
     fun getAllTokensOnJexchange(size: Int) : Single<List<TokenResponse>>
 
     fun getTokensCountOnJexchange() : Single<Int>
+
+    fun getTransactionWithHash(txHash: String) : Single<TransactionsResponse>
+
 }

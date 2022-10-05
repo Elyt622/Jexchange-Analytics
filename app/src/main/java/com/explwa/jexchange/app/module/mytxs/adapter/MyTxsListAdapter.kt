@@ -1,19 +1,20 @@
 package com.explwa.jexchange.app.module.mytxs.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.explwa.jexchange.R
 import com.explwa.jexchange.app.module.utils.Utils
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.databinding.ViewHolderMyTokenTransferBinding
+import com.explwa.jexchange.presenter.viewModels.MyTxsViewModel
+import io.reactivex.rxjava3.kotlin.subscribeBy
 
 
 class MyTxsListAdapter(
-    private val data: List<TransactionsResponse>
+    private val data: List<TransactionsResponse>,
+    private val viewModel: MyTxsViewModel
 ) : RecyclerView.Adapter<MyTxsListAdapter.ViewHolder>() {
 
     private lateinit var binding : ViewHolderMyTokenTransferBinding
@@ -38,30 +39,16 @@ class MyTxsListAdapter(
             data[position].action?.argumentsResponse?.transfers?.get(0)?.decimals
         ).toPlainString()
 
-        holder.nameToken.text = data[position].action?.argumentsResponse?.transfers?.get(0)?.ticker.toString()
+        holder.nameToken.text =
+            data[position].action?.argumentsResponse?.transfers?.get(0)?.ticker.toString()
 
-        when(data[position].function.toString()) {
-            "enter_staking" -> {
-                holder.amountToken.setTextColor(
-                    Color.parseColor("#FFFFFF")
-                )
-                holder.action.text = context.resources.getText(R.string.staking)
-            }
-            "fill_offer" -> {
-                holder.amountToken.setTextColor(
-                    Color.parseColor("#FF0000")
-                )
-                holder.action.text = data[position].function.toString()
-            }
-            "null" -> {
-                holder.amountToken.setTextColor(
-                    context.resources.getColor(
-                        R.color.greenJex,
-                        context.resources.newTheme()
-                    )
-                )
-                holder.action.text = ""
-            }
+        if (data[position].originalTxHash != null) {
+             viewModel.getTransactionWithHash(data[position].originalTxHash!!)
+                 .subscribeBy {
+                     holder.action.text = it.function.toString()
+                 }
+        } else {
+            holder.action.text = data[position].function.toString()
         }
     }
 

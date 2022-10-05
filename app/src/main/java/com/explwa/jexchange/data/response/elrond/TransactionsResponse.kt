@@ -16,6 +16,7 @@ data class TransactionsResponse (
     @SerializedName("receiverShard") var receiverShard  : Int? = null,
     @SerializedName("round") var round : Int? = null,
     @SerializedName("sender") var sender : String? = null,
+    @SerializedName("senderAssets") var senderAssets : SenderAssetsResponse? = SenderAssetsResponse(),
     @SerializedName("senderShard") var senderShard : Int? = null,
     @SerializedName("signature") var signature : String? = null,
     @SerializedName("status") var status : String? = null,
@@ -24,6 +25,12 @@ data class TransactionsResponse (
     @SerializedName("timestamp") var timestamp : Int? = null,
     @SerializedName("data") var data : String? = null,
     @SerializedName("function") var function : String? = null,
-    @SerializedName("action") var action : ActionResponse? = ActionResponse()
+    @SerializedName("action") var action : ActionResponse? = ActionResponse(),
+    @SerializedName("type") var type : String? = null,
+    @SerializedName("originalTxHash") var originalTxHash : String? = null,
+    @SerializedName("results") var results : ArrayList<ResultsResponse> = arrayListOf(),
+    @SerializedName("price") var price : Double? = null,
+    @SerializedName("logs") var logs : LogsResponse? = LogsResponse(),
+    @SerializedName("operations") var operations : ArrayList<OperationsResponse> = arrayListOf()
 
 )

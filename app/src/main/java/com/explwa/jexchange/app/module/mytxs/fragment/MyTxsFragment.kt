@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +43,7 @@ class MyTxsFragment : Fragment() {
 
         binding.buttonCheckHerotagAddress.setOnClickListener {
             updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
-            viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString())
+            viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString(), "TOLKEN-a9eb7f")
                 .subscribeBy (
                     onSuccess = { txsList ->
                         updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
@@ -59,7 +58,7 @@ class MyTxsFragment : Fragment() {
         }
     }
 
-    private fun updateUi(state : MyTxsViewModel.MyTxsViewModelStateSealed) {
+    private fun updateUi(state : MyTxsViewModel.ViewState) {
         with(binding) {
             when (state) {
                 is MyTxsViewModel.MyTxsViewModelStateLogin -> {
@@ -73,7 +72,7 @@ class MyTxsFragment : Fragment() {
                     rvMyTransactions.isGone = true
                 }
                 is MyTxsViewModel.MyTxsViewModelStateSuccess -> {
-                    rvMyTransactions.adapter = MyTxsListAdapter(state.myTxs)
+                    rvMyTransactions.adapter = MyTxsListAdapter(state.myTxs, viewModel)
                     progressCircular.isGone = state.progressBarIsGone
                     rvMyTransactions.isGone = false
                     constraintLayoutHerotagAddress.isGone = state.loginIsGone
@@ -91,7 +90,7 @@ class MyTxsFragment : Fragment() {
 
     private fun configRecyclerView() {
         binding.rvMyTransactions.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvMyTransactions.adapter = MyTxsListAdapter(listOf())
+        binding.rvMyTransactions.adapter = MyTxsListAdapter(listOf(), viewModel)
     }
 
 }

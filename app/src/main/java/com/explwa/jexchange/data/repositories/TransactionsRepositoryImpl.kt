@@ -1,10 +1,10 @@
 package com.explwa.jexchange.data.repositories
 
-import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import com.explwa.jexchange.data.network.api.ElrondApi
 import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.data.response.elrond.UsernameResponse
+import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
@@ -24,12 +24,12 @@ class TransactionsRepositoryImpl @Inject constructor(
         return elrondApi.getJexTransactions()
     }
 
-    override fun getMyTokenTransfers(address: String, size: Int): Single<List<TransactionsResponse>> {
-        return elrondApi.getMyTokenTransfers(address, size)
+    override fun getMyTokenTransfers(address: String, token: String, size: Int): Single<List<TransactionsResponse>> {
+        return elrondApi.getMyTokenTransfers(address, token, size)
     }
 
-    override fun getMyTokenTransfersCount(address: String): Single<Int> {
-        return elrondApi.getMyTokenTransfersCount(address)
+    override fun getMyTokenTransfersCount(address: String, token: String): Single<Int> {
+        return elrondApi.getMyTokenTransfersCount(address, token)
     }
 
     override fun getAllTokensOnJexchange(size: Int): Single<List<TokenResponse>> {
@@ -40,4 +40,8 @@ class TransactionsRepositoryImpl @Inject constructor(
         return elrondApi.getTokensCountOnJexchange()
     }
 
-}
+     override fun getTransactionWithHash(txHash: String) : Single<TransactionsResponse> {
+         return elrondApi.getTransactionWithHash(txHash)
+     }
+
+ }

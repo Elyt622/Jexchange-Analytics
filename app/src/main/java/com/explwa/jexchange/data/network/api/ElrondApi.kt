@@ -1,7 +1,7 @@
 package com.explwa.jexchange.data.network.api
 
-import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.data.response.elrond.TokenResponse
+import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.data.response.elrond.UsernameResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
@@ -27,15 +27,17 @@ interface ElrondApi {
     @GET("/transactions?receiver=erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2&token=JEX-9040ca&status=success&function=Create_offer&order=desc")
     fun getJexTransactions() : Single<List<TransactionsResponse>>
 
-    @GET("/accounts/{address}/transfers?token=JEX-9040ca&status=success&order=desc")
+    @GET("/accounts/{address}/transfers?status=success&order=desc")
     fun getMyTokenTransfers(
         @Path("address") address: String,
+        @Query("token") token: String,
         @Query("size") size: Int
     ) : Single<List<TransactionsResponse>>
 
-    @GET("/accounts/{address}/transfers/count?token=JEX-9040ca&status=success")
+    @GET("/accounts/{address}/transfers/count?status=success")
     fun getMyTokenTransfersCount(
-        @Path("address") address: String
+        @Path("address") address: String,
+        @Query("token") token: String
     ) : Single<Int>
 
     @GET("/accounts/erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2/tokens/count")
@@ -45,5 +47,10 @@ interface ElrondApi {
     fun getAllTokensOnJexchange(
         @Query("size") size: Int
     ) : Single<List<TokenResponse>>
+
+    @GET("/transactions/{txHash}")
+    fun getTransactionWithHash(
+        @Path("txHash") txHash: String
+    ) : Single<TransactionsResponse>
 
 }
