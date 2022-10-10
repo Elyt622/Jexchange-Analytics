@@ -1,6 +1,7 @@
 package com.explwa.jexchange.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
+import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.domain.usecases.GetMyTokenTransactionsUseCase
 import com.explwa.jexchange.presenter.util.MySchedulers
@@ -35,6 +36,12 @@ class MyTxsViewModel @Inject constructor(
 
     fun getTransactionWithHash(txHash: String) : Single<TransactionsResponse> {
         return useCase.getTransactionWithHash(txHash)
+            .subscribeOn(mySchedulers.io)
+            .observeOn(mySchedulers.main)
+    }
+
+    fun getAllTokensOnJexchange(): Single<MutableList<String>> {
+        return useCase.getAllTokensOnJexchange()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
     }

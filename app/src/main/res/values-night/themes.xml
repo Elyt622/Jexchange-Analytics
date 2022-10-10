@@ -15,5 +15,11 @@
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:windowBackground">@color/nightBackground</item>
         <item name="bottomNavigationStyle">@style/Widget.Design.BottomNavigationView</item>
+        <item name="autoCompleteTextViewStyle">@style/AutocompleteStyle</item>
     </style>
+
+    <style name="AutocompleteStyle" parent="android:Widget.AutoCompleteTextView">
+        <item name="android:background">@color/nightBackground</item>
+    </style>
+
 </resources>

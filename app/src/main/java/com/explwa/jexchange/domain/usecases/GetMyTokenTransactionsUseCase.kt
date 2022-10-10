@@ -1,5 +1,6 @@
 package com.explwa.jexchange.domain.usecases
 
+import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import io.reactivex.rxjava3.core.Observable
@@ -31,6 +32,18 @@ class GetMyTokenTransactionsUseCase @Inject constructor(
 
     fun getTransactionWithHash(txHash: String) : Single<TransactionsResponse> {
         return repository.getTransactionWithHash(txHash)
+    }
+
+    fun getAllTokensOnJexchange(): Single<MutableList<String>> {
+        return repository.getTokensCountOnJexchange()
+            .flatMap {
+                repository.getAllTokensOnJexchange(it)
+                    .toObservable()
+                    .flatMapIterable { it }
+                    .flatMap {
+                        Observable.just(it.identifier.toString())
+                    }.toList()
+            }
     }
 
 }

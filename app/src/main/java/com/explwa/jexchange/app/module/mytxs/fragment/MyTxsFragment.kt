@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
@@ -33,6 +35,7 @@ class MyTxsFragment : Fragment() {
     ): View {
         binding = FragmentMyTxsBinding.inflate(layoutInflater)
         configRecyclerView()
+        configAutocompleteTextView()
         return binding.root
     }
 
@@ -43,7 +46,7 @@ class MyTxsFragment : Fragment() {
 
         binding.buttonCheckHerotagAddress.setOnClickListener {
             updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
-            viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString(), "TOLKEN-a9eb7f")
+            viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString(), "JEX-9040ca")
                 .subscribeBy (
                     onSuccess = { txsList ->
                         updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
@@ -64,17 +67,20 @@ class MyTxsFragment : Fragment() {
                 is MyTxsViewModel.MyTxsViewModelStateLogin -> {
                     constraintLayoutHerotagAddress.isGone = state.loginIsGone
                     progressCircular.isGone = state.progressBarIsGone
+                    materialCardViewAutocomplete.isGone = true
                     rvMyTransactions.isGone = true
                 }
                 is MyTxsViewModel.MyTxsViewModelStateLoading -> {
                     progressCircular.isGone = state.progressBarIsGone
                     constraintLayoutHerotagAddress.isGone = state.loginIsGone
+                    materialCardViewAutocomplete.isGone = true
                     rvMyTransactions.isGone = true
                 }
                 is MyTxsViewModel.MyTxsViewModelStateSuccess -> {
                     rvMyTransactions.adapter = MyTxsListAdapter(state.myTxs, viewModel)
                     progressCircular.isGone = state.progressBarIsGone
                     rvMyTransactions.isGone = false
+                    materialCardViewAutocomplete.isGone = false
                     constraintLayoutHerotagAddress.isGone = state.loginIsGone
                 }
                 is MyTxsViewModel.MyTxsViewModelStateError -> {
@@ -88,9 +94,51 @@ class MyTxsFragment : Fragment() {
         }
     }
 
-    private fun configRecyclerView() {
-        binding.rvMyTransactions.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvMyTransactions.adapter = MyTxsListAdapter(listOf(), viewModel)
+    private fun configAutocompleteTextView() {
+        with(binding) {
+            viewModel.getAllTokensOnJexchange()
+                .subscribeBy {
+                    if (activity != null) {
+                        val arrayAdapter = ArrayAdapter(
+                            requireActivity(),
+                            android.R.layout.simple_list_item_1,
+                            it,
+                        )
+                        autocompleteSearch.setAdapter(arrayAdapter)
+                    }
+                }
+
+            autocompleteSearch.setOnClickListener {
+                autocompleteSearch.showDropDown()
+            }
+
+            autocompleteSearch.setOnFocusChangeListener { _, _ ->
+                autocompleteSearch.showDropDown()
+            }
+
+            autocompleteSearch.onItemClickListener =
+                AdapterView.OnItemClickListener { _, _, _, _ ->
+                    updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
+                    viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString(), autocompleteSearch.text.toString())
+                        .subscribeBy (
+                            onSuccess = { txsList ->
+                                updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
+                            },
+                            onError = {
+                                updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
+                                updateUi(MyTxsViewModel.MyTxsViewModelStateError(
+                                    "The address or herotag is invalid")
+                                )
+                            }
+                        )
+                }
+        }
     }
 
+    private fun configRecyclerView() {
+        with(binding) {
+            rvMyTransactions.layoutManager = LinearLayoutManager(requireContext())
+            rvMyTransactions.adapter = MyTxsListAdapter(listOf(), viewModel)
+        }
+    }
 }
