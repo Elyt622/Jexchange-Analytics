@@ -14,6 +14,11 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="materialCardViewStyle">@style/MaterialCardViewStyle</item>
+        <item name="autoCompleteTextViewStyle">@style/AutocompleteStyle</item>
+    </style>
+
+    <style name="AutocompleteStyle" parent="android:Widget.AutoCompleteTextView">
+        <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
     <style name="MaterialCardViewStyle" parent="Widget.MaterialComponents.CardView">

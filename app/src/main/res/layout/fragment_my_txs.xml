@@ -77,17 +77,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/autocomplete_search"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/typesFilterContainer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:completionThreshold="1"
-                android:drawableStart="@drawable/ic_jex_logo"
-                android:drawablePadding="8dp"
-                android:hint="@string/token"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/autocomplete_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:completionThreshold="1"
+                    android:drawableStart="@drawable/ic_jex_logo"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/token"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView

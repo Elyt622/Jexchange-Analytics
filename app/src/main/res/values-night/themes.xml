@@ -20,7 +20,7 @@
     </style>
 
     <style name="AutocompleteStyle" parent="android:Widget.AutoCompleteTextView">
-        <item name="android:background">@color/nightBackground</item>
+        <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
     <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
