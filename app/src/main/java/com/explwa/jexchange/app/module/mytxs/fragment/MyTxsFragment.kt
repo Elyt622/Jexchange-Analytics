@@ -11,6 +11,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.explwa.jexchange.R
 import com.explwa.jexchange.app.module.mytxs.adapter.MyTxsListAdapter
 import com.explwa.jexchange.databinding.FragmentMyTxsBinding
 import com.explwa.jexchange.presenter.viewModels.MyTxsViewModel
@@ -101,7 +102,7 @@ class MyTxsFragment : Fragment() {
                     if (activity != null) {
                         val arrayAdapter = ArrayAdapter(
                             requireActivity(),
-                            android.R.layout.simple_list_item_1,
+                            R.layout.simple_list,
                             it,
                         )
                         autocompleteSearch.setAdapter(arrayAdapter)

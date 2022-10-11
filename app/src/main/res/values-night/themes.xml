@@ -17,10 +17,11 @@
         <item name="autoCompleteTextViewStyle">@style/AutocompleteStyle</item>
         <item name="bottomNavigationStyle">@style/BottomNavigationViewStyle</item>
         <item name="materialCardViewStyle">@style/MaterialCardViewStyle</item>
+        <item name="android:popupBackground">@color/nightBackground</item>
     </style>
 
     <style name="AutocompleteStyle" parent="android:Widget.AutoCompleteTextView">
-        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
     <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
