@@ -1,14 +1,13 @@
 package com.explwa.jexchange.domain.usecases
 
-import com.explwa.jexchange.data.response.elrond.TokenResponse
-import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse
+import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 
-class GetMyTokenTransactionsUseCase @Inject constructor(
+class GetMyTokenTransactions @Inject constructor(
     private val repository: TransactionsRepository
 ) {
 
@@ -40,8 +39,8 @@ class GetMyTokenTransactionsUseCase @Inject constructor(
                 repository.getAllTokensOnJexchange(it)
                     .toObservable()
                     .flatMapIterable { it }
-                    .flatMap {
-                        Observable.just(it.identifier.toString())
+                    .map { token ->
+                        token.identifier.toString()
                     }.toList()
             }
     }
