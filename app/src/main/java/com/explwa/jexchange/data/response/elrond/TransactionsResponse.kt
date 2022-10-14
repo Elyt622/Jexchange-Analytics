@@ -1,6 +1,7 @@
 package com.explwa.jexchange.data.response.elrond
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigInteger
 
 
 data class TransactionsResponse (
@@ -13,11 +14,11 @@ data class TransactionsResponse (
     @SerializedName("nonce") var nonce : Int? = null,
     @SerializedName("receiver") var receiver : String? = null,
     @SerializedName("receiverAssets") var receiverAssetsResponse : ReceiverAssetsResponse? = ReceiverAssetsResponse(),
-    @SerializedName("receiverShard") var receiverShard  : Int? = null,
+    @SerializedName("receiverShard") var receiverShard  : BigInteger? = null,
     @SerializedName("round") var round : Int? = null,
     @SerializedName("sender") var sender : String? = null,
     @SerializedName("senderAssets") var senderAssets : SenderAssetsResponse? = SenderAssetsResponse(),
-    @SerializedName("senderShard") var senderShard : Int? = null,
+    @SerializedName("senderShard") var senderShard : BigInteger? = null,
     @SerializedName("signature") var signature : String? = null,
     @SerializedName("status") var status : String? = null,
     @SerializedName("value") var value : String? = null,
@@ -31,6 +32,6 @@ data class TransactionsResponse (
     @SerializedName("results") var results : ArrayList<ResultsResponse> = arrayListOf(),
     @SerializedName("price") var price : Double? = null,
     @SerializedName("logs") var logs : LogsResponse? = LogsResponse(),
-    @SerializedName("operations") var operations : ArrayList<OperationsResponse> = arrayListOf()
+    @SerializedName("operations") var operations : ArrayList<OperationsResponse>? = arrayListOf()
 
 )
