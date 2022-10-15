@@ -10,14 +10,6 @@ import java.util.*
 
 object Utils {
 
-    fun divideBigIntegerBy2(string: String?) : BigInteger {
-        return BigInteger(string.toString()).divide(BigInteger("2"))
-    }
-
-    fun fromBigIntegerToBigDecimal(bigInteger: BigInteger, decimals: Int?) : BigDecimal {
-        return BigDecimal(bigInteger, decimals!!).setScale(2, RoundingMode.DOWN)
-    }
-
     fun fromBigIntegerToBigDecimal(bigIntegerStr: String?, decimals: Int?) : BigDecimal {
 
         val bigInteger = BigInteger(bigIntegerStr!!)
