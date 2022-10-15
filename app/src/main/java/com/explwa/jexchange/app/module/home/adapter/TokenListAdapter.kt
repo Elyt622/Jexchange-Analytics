@@ -1,54 +1,81 @@
 package com.explwa.jexchange.app.module.home.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.explwa.jexchange.app.module.utils.Utils
 import com.explwa.jexchange.data.response.elrond.TokenResponse
+import com.explwa.jexchange.data.response.elrond.TransactionsResponse
+import com.explwa.jexchange.databinding.ViewHolderStakingBinding
 import com.explwa.jexchange.databinding.ViewHolderTokensBinding
 
+// Recycler View Adapter into List Adapter
+// https://medium.com/codex/stop-using-recyclerview-adapter-27c77666512b
+
 class TokenListAdapter(
-    private val data: List<TokenResponse>
-) : RecyclerView.Adapter<TokenListAdapter.ViewHolder>() {
+    data: List<TokenResponse>
+) : ListAdapter<TokenResponse, TokenListAdapter.ViewHolder>(callback) {
 
     private lateinit var binding : ViewHolderTokensBinding
 
     private lateinit var context : Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ViewHolderTokensBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        context = parent.context
-        return ViewHolder(binding.root)
-    }
+    companion object {
+        val callback = object : DiffUtil.ItemCallback<TokenResponse>() {
+            override fun areItemsTheSame(oldItem: TokenResponse, newItem: TokenResponse) =
+                oldItem.identifier == newItem.identifier
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder){
-            Glide.with(context).load(data[position].assets?.pngUrl).into(imageToken)
-            Glide.with(context).load(data[position].assets?.pngUrl).into(logoBackground)
-            identifier.text = data[position].identifier
-            price.text = Utils.toFormatString(data[position].price.toString())
-            name.text = data[position].name
+            override fun areContentsTheSame(oldItem: TokenResponse, newItem: TokenResponse) =
+                oldItem == newItem
         }
     }
 
-    override fun getItemCount(): Int {
-        return data.size
+    var list: List<TokenResponse>
+        get() = currentList
+        set(value) {
+            submitList(value)
+        }
+
+    init {
+        list = data
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val identifier = binding.textviewTokenId
-        val name = binding.textviewTokenName
-        val price = binding.textviewPriceToken
-        val imageToken = binding.imageViewToken
-        val logoBackground = binding.imageViewLogoBackground
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        context = parent.context
+        return ViewHolder(
+            ViewHolderTokensBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+    inner class ViewHolder(private val binding: ViewHolderTokensBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind (tokenResponse: TokenResponse) {
+            with(binding) {
+                Glide.with(context).load(tokenResponse.assets?.pngUrl).into(imageViewToken)
+                Glide.with(context).load(tokenResponse.assets?.pngUrl).into(imageViewLogoBackground)
+                textviewTokenId.text = tokenResponse.identifier
+                textviewPriceToken.text = Utils.toFormatString(tokenResponse.price.toString())
+                textviewTokenName.text = tokenResponse.name
+            }
+        }
+
     }
 
 }

@@ -2,8 +2,9 @@ package com.explwa.jexchange.app.module.staking.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.explwa.jexchange.app.module.utils.Utils
@@ -12,56 +13,79 @@ import com.explwa.jexchange.databinding.ViewHolderStakingBinding
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class StakingListAdapter(
-    private val data: List<TokenResponse>
-) : RecyclerView.Adapter<StakingListAdapter.ViewHolder>() {
+// Recycler View Adapter into List Adapter
+// https://medium.com/codex/stop-using-recyclerview-adapter-27c77666512b
 
-    private lateinit var binding : ViewHolderStakingBinding
+class StakingListAdapter(
+    data: List<TokenResponse>
+) : ListAdapter<TokenResponse, StakingListAdapter.ViewHolder>(callback) {
 
     private lateinit var context : Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ViewHolderStakingBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        context = parent.context
-        return ViewHolder(binding.root)
-    }
+    companion object {
+        val callback = object : DiffUtil.ItemCallback<TokenResponse>() {
+            override fun areItemsTheSame(oldItem: TokenResponse, newItem: TokenResponse) =
+                oldItem.identifier == newItem.identifier
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder) {
-            Glide.with(context).load(data[position].assets?.pngUrl).into(imageToken)
-            nameToken.text = data[position].identifier?.substringBefore('-')
-            numberToken.text =
-                Utils.fromBigIntegerToBigDecimal(
-                    Utils.divideBigIntegerBy2(
-                        data[position].balance),
-                    data[position].decimals
-                ).toPlainString()
-
-            if(data[position].price != null)
-                tokenPrice.text =
-                    (Utils.fromBigIntegerToBigDecimal(
-                        Utils.divideBigIntegerBy2(
-                            data[position].balance!!
-                        ), data[position].decimals
-                    ) * BigDecimal(
-                        data[position].price!!)
-                            ).setScale(2, RoundingMode.DOWN)
-                        .toPlainString()
+            override fun areContentsTheSame(oldItem: TokenResponse, newItem: TokenResponse) =
+                oldItem == newItem
         }
     }
 
-    override fun getItemCount(): Int {
-        return data.size
+    var list: List<TokenResponse>
+        get() = currentList
+        set(value) {
+            submitList(value)
+        }
+
+    init {
+        list = data
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val nameToken = binding.textviewNameToken
-        val numberToken = binding.textviewNumberToken
-        val imageToken = binding.imageViewToken
-        val tokenPrice = binding.textviewTokensDollars
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        context = parent.context
+        return ViewHolder(
+            ViewHolderStakingBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+    inner class ViewHolder(private val binding: ViewHolderStakingBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind (tokenResponse: TokenResponse) {
+            with(binding) {
+                textviewNameToken.text = tokenResponse.identifier?.substringBefore('-')
+
+                textviewNumberToken.text = Utils.fromBigIntegerToBigDecimal(
+                    tokenResponse.balance,
+                    tokenResponse.decimals
+                ).toPlainString()
+
+                if(tokenResponse.price != null)
+                    textviewTokensDollars.text = (Utils.fromBigIntegerToBigDecimal(
+                        tokenResponse.balance!!,
+                        tokenResponse.decimals
+                    ) * BigDecimal(
+                        tokenResponse.price!!)
+                            ).setScale(2, RoundingMode.DOWN)
+                        .toPlainString()
+                else
+                    textviewTokensDollars.text = ""
+
+                Glide.with(context).load(tokenResponse.assets?.pngUrl).into(imageViewToken)
+            }
+        }
+
     }
 }
