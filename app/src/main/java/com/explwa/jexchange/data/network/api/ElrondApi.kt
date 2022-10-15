@@ -53,4 +53,41 @@ interface ElrondApi {
         @Path("txHash") txHash: String
     ) : Single<TransactionsResponse>
 
+    // Staking
+    // Enter Staking
+    @GET("/accounts/{address}/transactions?status=success&function=enter_staking&order=desc")
+    fun getEnterStaking(
+        @Path("address") address: String,
+        @Query("size") size: Int
+    ) : Single<List<TransactionsResponse>>
+
+    @GET("/accounts/{address}/transactions/count?status=success&function=enter_staking")
+    fun getEnterStakingCount(
+        @Path("address") address: String,
+    ) : Single<Int>
+
+    // Exit Staking
+    @GET("/accounts/{address}/transactions?status=success&function=exit_staking&order=desc&withOperations=true")
+    fun getExitStaking(
+        @Path("address") address: String,
+        @Query("size") size: Int
+    ) : Single<List<TransactionsResponse>>
+
+    @GET("/accounts/{address}/transactions/count?status=success&function=exit_staking")
+    fun getExitStakingCount(
+        @Path("address") address: String,
+    ) : Single<Int>
+
+    // Exit Staking with penalty
+
+    @GET("/accounts/{address}/transactions?status=success&order=desc&function=exit_staking_with_penalty&withOperations=true")
+    fun getExitStakingWithPenalty(
+        @Path("address") address: String,
+        @Query("size") size: Int
+    ) : Single<List<TransactionsResponse>>
+
+    @GET("/accounts/{address}/transactions/count?status=success&function=exit_staking_with_penalty")
+    fun getExitStakingWithPenaltyCount(
+        @Path("address") address: String,
+    ) : Single<Int>
 }
