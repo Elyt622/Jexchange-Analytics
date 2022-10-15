@@ -21,8 +21,6 @@ class TokenListAdapter(
     data: List<TokenResponse>
 ) : ListAdapter<TokenResponse, TokenListAdapter.ViewHolder>(callback) {
 
-    private lateinit var binding : ViewHolderTokensBinding
-
     private lateinit var context : Context
 
     companion object {
