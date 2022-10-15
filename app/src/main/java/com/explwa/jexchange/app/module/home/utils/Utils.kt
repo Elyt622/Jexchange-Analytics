@@ -1,4 +1,4 @@
-package com.explwa.jexchange.app.module.utils
+package com.explwa.jexchange.app.module.home.utils
 
 import java.lang.StringBuilder
 import java.math.BigDecimal
@@ -7,14 +7,7 @@ import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 object Utils {
-
-    fun fromBigIntegerToBigDecimal(bigIntegerStr: String?, decimals: Int?) : BigDecimal {
-
-        val bigInteger = BigInteger(bigIntegerStr!!)
-        return BigDecimal(bigInteger, decimals!!).setScale(2, RoundingMode.DOWN)
-    }
 
     fun toFormatString(bigNumberStr: String?) : String {
         return if (bigNumberStr != "null") {
@@ -45,16 +38,6 @@ object Utils {
             string?.toBigDecimal()?.setScale(scale, RoundingMode.DOWN)?.stripTrailingZeros().toString()
         else
             string?.toBigDecimal()?.setScale(scale, RoundingMode.DOWN).toString()
-    }
-
-    fun getDateTime(s: String): String? {
-        return try {
-            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.FRANCE)
-            val netDate = Date(s.toLong() * 1000)
-            sdf.format(netDate)
-        } catch (e: Exception) {
-            e.toString()
-        }
     }
 
 }

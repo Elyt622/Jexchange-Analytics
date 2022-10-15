@@ -1,12 +1,11 @@
 package com.explwa.jexchange.app.module.mytxs.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.explwa.jexchange.app.module.utils.Utils
+import com.explwa.jexchange.app.module.mytxs.utils.Utils
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.databinding.ViewHolderMyTokenTransferBinding
 import com.explwa.jexchange.presenter.viewModels.MyTxsViewModel
