@@ -1,8 +1,6 @@
 package com.explwa.jexchange.app.module.home.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.explwa.jexchange.app.module.utils.Utils
 import com.explwa.jexchange.data.response.elrond.TokenResponse
-import com.explwa.jexchange.data.response.elrond.TransactionsResponse
-import com.explwa.jexchange.databinding.ViewHolderStakingBinding
 import com.explwa.jexchange.databinding.ViewHolderTokensBinding
 
 // Recycler View Adapter into List Adapter
@@ -20,8 +16,6 @@ import com.explwa.jexchange.databinding.ViewHolderTokensBinding
 class TokenListAdapter(
     data: List<TokenResponse>
 ) : ListAdapter<TokenResponse, TokenListAdapter.ViewHolder>(callback) {
-
-    private lateinit var context : Context
 
     companion object {
         val callback = object : DiffUtil.ItemCallback<TokenResponse>() {
@@ -44,7 +38,6 @@ class TokenListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        context = parent.context
         return ViewHolder(
             ViewHolderTokensBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -66,8 +59,8 @@ class TokenListAdapter(
 
         fun bind (tokenResponse: TokenResponse) {
             with(binding) {
-                Glide.with(context).load(tokenResponse.assets?.pngUrl).into(imageViewToken)
-                Glide.with(context).load(tokenResponse.assets?.pngUrl).into(imageViewLogoBackground)
+                Glide.with(root.context).load(tokenResponse.assets?.pngUrl).into(imageViewToken)
+                Glide.with(root.context).load(tokenResponse.assets?.pngUrl).into(imageViewLogoBackground)
                 textviewTokenId.text = tokenResponse.identifier
                 textviewPriceToken.text = Utils.toFormatString(tokenResponse.price.toString())
                 textviewTokenName.text = tokenResponse.name

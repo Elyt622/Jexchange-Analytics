@@ -20,8 +20,6 @@ class MyTxsListAdapter(
     private val viewModel: MyTxsViewModel
 ) : ListAdapter<TransactionsResponse, MyTxsListAdapter.ViewHolder>(callback) {
 
-    private lateinit var context: Context
-
     companion object {
         val callback = object : DiffUtil.ItemCallback<TransactionsResponse>() {
             override fun areItemsTheSame(oldItem: TransactionsResponse, newItem: TransactionsResponse) =
@@ -43,7 +41,6 @@ class MyTxsListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        context = parent.context
         return ViewHolder(
             ViewHolderMyTokenTransferBinding.inflate(
                 LayoutInflater.from(parent.context),

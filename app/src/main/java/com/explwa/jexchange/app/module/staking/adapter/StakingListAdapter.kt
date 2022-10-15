@@ -1,6 +1,5 @@
 package com.explwa.jexchange.app.module.staking.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -19,8 +18,6 @@ import java.math.RoundingMode
 class StakingListAdapter(
     data: List<TokenResponse>
 ) : ListAdapter<TokenResponse, StakingListAdapter.ViewHolder>(callback) {
-
-    private lateinit var context : Context
 
     companion object {
         val callback = object : DiffUtil.ItemCallback<TokenResponse>() {
@@ -43,7 +40,6 @@ class StakingListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        context = parent.context
         return ViewHolder(
             ViewHolderStakingBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -83,7 +79,7 @@ class StakingListAdapter(
                 else
                     textviewTokensDollars.text = ""
 
-                Glide.with(context).load(tokenResponse.assets?.pngUrl).into(imageViewToken)
+                Glide.with(root.context).load(tokenResponse.assets?.pngUrl).into(imageViewToken)
             }
         }
 
