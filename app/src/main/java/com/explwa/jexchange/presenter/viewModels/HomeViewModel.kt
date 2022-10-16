@@ -25,6 +25,10 @@ class HomeViewModel @Inject constructor(
     fun getAllTokensOnJexchange(): Single<List<TokenResponse>> {
         return repository.getTokensCountOnJexchange()
             .flatMap { repository.getAllTokensOnJexchange(it) }
+            .toObservable()
+            .flatMapIterable { it }
+            .filter { it.price != null }
+            .toList()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
     }

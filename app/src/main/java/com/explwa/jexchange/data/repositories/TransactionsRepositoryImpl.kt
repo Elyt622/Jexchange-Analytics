@@ -34,10 +34,6 @@ class TransactionsRepositoryImpl @Inject constructor(
 
     override fun getAllTokensOnJexchange(size: Int): Single<List<TokenResponse>> {
         return elrondApi.getAllTokensOnJexchange(size)
-            .toObservable()
-            .flatMapIterable { it }
-            .filter { it.price != null }
-            .toList()
     }
 
     override fun getTokensCountOnJexchange(): Single<Int> {
