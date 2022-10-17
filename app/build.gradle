@@ -37,6 +37,7 @@ android {
 }
 
 def retrofit_version = "2.9.0"
+def paging_version = "3.2.0-alpha02"
 
 dependencies {
 
@@ -55,6 +56,9 @@ dependencies {
     implementation group: 'bouncycastle', name: 'bcprov-jdk14', version: '136'
 
     implementation 'com.tradingview:lightweightcharts:3.8.0'
+
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-rxjava3:$paging_version"
 
     //GLIDE
     implementation 'com.github.bumptech.glide:glide:4.13.2'
