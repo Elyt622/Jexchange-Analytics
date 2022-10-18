@@ -6,14 +6,15 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.explwa.jexchange"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,7 +42,7 @@ def paging_version = "3.2.0-alpha02"
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation "androidx.fragment:fragment-ktx:1.5.3"
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
@@ -74,12 +75,18 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
 
+    //multidex
+    implementation 'com.android.support:multidex:1.0.3'
+
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation "com.google.dagger:dagger-android-support:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     // Hilt testing
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    kapt "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0"
 }
 
 // Allow references to generated code
