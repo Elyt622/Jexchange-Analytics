@@ -12,36 +12,29 @@ class TransactionsRepositoryImpl @Inject constructor(
     private val elrondApi: ElrondApi
 ) : TransactionsRepository {
 
-    override fun getAddressWithUsername(username: String): Single<UsernameResponse> {
-        return elrondApi.getAddressWithUsername(username)
-    }
+    // Get address with username
+    override fun getAddressWithUsername(username: String)
+    : Single<UsernameResponse> = elrondApi.getAddressWithUsername(username)
 
-    override fun getTransactions(senderAddress: String): Single<List<TransactionsResponse>> {
-        return elrondApi.getTransactions(senderAddress)
-    }
+    // Get transfers with a token
+    override fun getMyTokenTransfers(
+        address: String,
+        token: String,
+        size: Int,
+        from: Int
+    ): Single<List<TransactionsResponse>> = elrondApi.getMyTokenTransfers(address, token, size, from)
 
-    override fun getJexTransactions(): Single<List<TransactionsResponse>> {
-        return elrondApi.getJexTransactions()
-    }
+    override fun getMyTokenTransfersCount(address: String, token: String)
+    : Single<Int> = elrondApi.getMyTokenTransfersCount(address, token)
 
-    override fun getMyTokenTransfers(address: String, token: String, size: Int): Single<List<TransactionsResponse>> {
-        return elrondApi.getMyTokenTransfers(address, token, size)
-    }
+    override fun getTransactionWithHash(txHash: String)
+    : Single<TransactionsResponse> = elrondApi.getTransactionWithHash(txHash)
 
-    override fun getMyTokenTransfersCount(address: String, token: String): Single<Int> {
-        return elrondApi.getMyTokenTransfersCount(address, token)
-    }
+    // Get all token used on Jexchange
+    override fun getAllTokensOnJexchange(size: Int)
+    : Single<List<TokenResponse>> =
+        elrondApi.getAllTokensOnJexchange(size)
 
-    override fun getAllTokensOnJexchange(size: Int): Single<List<TokenResponse>> {
-        return elrondApi.getAllTokensOnJexchange(size)
-    }
-
-    override fun getTokensCountOnJexchange(): Single<Int> {
-        return elrondApi.getTokensCountOnJexchange()
-    }
-
-     override fun getTransactionWithHash(txHash: String) : Single<TransactionsResponse> {
-         return elrondApi.getTransactionWithHash(txHash)
-     }
-
+    override fun getTokensCountOnJexchange()
+    : Single<Int> = elrondApi.getTokensCountOnJexchange()
  }

@@ -10,11 +10,7 @@ interface TransactionsRepository {
 
     fun getAddressWithUsername(username: String) : Single<UsernameResponse>
 
-    fun getTransactions(senderAddress: String) : Single<List<TransactionsResponse>>
-
-    fun getJexTransactions() : Single<List<TransactionsResponse>>
-
-    fun getMyTokenTransfers(address: String, token: String, size: Int) : Single<List<TransactionsResponse>>
+    fun getMyTokenTransfers(address: String, token: String, size: Int, from: Int) : Single<List<TransactionsResponse>>
 
     fun getMyTokenTransfersCount(address: String, token: String) : Single<Int>
 

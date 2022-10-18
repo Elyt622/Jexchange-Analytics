@@ -26,22 +26,21 @@ class MyTxsViewModel @Inject constructor(
     class MyTxsViewModelStateError(val errorMessage: String) : ViewState(false, listOf(), true)
 
 
-    fun getMyTokenTransfers(address: String, token: String) : Single<List<TransactionsResponse>> {
-        return useCase.getMyTokenTransfers(address, token)
+    fun getMyTokenTransfers(address: String, token: String)
+    : Single<List<TransactionsResponse>> =
+        useCase.getMyTokenTransfers(address, token)
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
-    }
 
-    fun getTransactionWithHash(txHash: String) : Single<TransactionsResponse> {
-        return useCase.getTransactionWithHash(txHash)
+    fun getTransactionWithHash(txHash: String)
+    : Single<TransactionsResponse> =
+        useCase.getTransactionWithHash(txHash)
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
-    }
 
-    fun getAllTokensOnJexchange(): Single<MutableList<String>> {
-        return useCase.getAllTokensOnJexchange()
+    fun getAllTokensOnJexchange(): Single<MutableList<String>> =
+        useCase.getAllTokensOnJexchange()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
-    }
 
 }
