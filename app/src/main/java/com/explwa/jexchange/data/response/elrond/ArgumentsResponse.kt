@@ -9,6 +9,5 @@ data class ArgumentsResponse (
     @SerializedName("receiver") var receiver : String? = null,
     @SerializedName("functionName") var functionName : String? = null,
     @SerializedName("functionArgs") var functionArgs   : ArrayList<String> = arrayListOf(),
-    @SerializedName("receiverAssets") var receiverAssetsResponse : ReceiverAssetsResponse? = ReceiverAssetsResponse()
 
 )

@@ -12,12 +12,10 @@ data class ResultsResponse (
     @SerializedName("value"          ) var value          : String?       = null,
     @SerializedName("sender"         ) var sender         : String?       = null,
     @SerializedName("receiver"       ) var receiver       : String?       = null,
-    @SerializedName("senderAssets"   ) var senderAssets   : SenderAssetsResponse? = SenderAssetsResponse(),
     @SerializedName("data"           ) var data           : String?       = null,
     @SerializedName("prevTxHash"     ) var prevTxHash     : String?       = null,
     @SerializedName("originalTxHash" ) var originalTxHash : String?       = null,
     @SerializedName("callType"       ) var callType       : String?       = null,
     @SerializedName("miniBlockHash"  ) var miniBlockHash  : String?       = null,
-    @SerializedName("logs"           ) var logs           : LogsResponse? = LogsResponse()
 
 )
