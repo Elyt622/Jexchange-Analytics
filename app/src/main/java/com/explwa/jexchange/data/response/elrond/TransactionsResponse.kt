@@ -25,8 +25,6 @@ data class TransactionsResponse (
     @SerializedName("action") var action : ActionResponse? = ActionResponse(),
     @SerializedName("type") var type : String? = null,
     @SerializedName("originalTxHash") var originalTxHash : String? = null,
-    @SerializedName("results") var results : ArrayList<ResultsResponse> = arrayListOf(),
     @SerializedName("price") var price : Double? = null,
-    @SerializedName("operations") var operations : ArrayList<OperationsResponse>? = arrayListOf()
 
 )
