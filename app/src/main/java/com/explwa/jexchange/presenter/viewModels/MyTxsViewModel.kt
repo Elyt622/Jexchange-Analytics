@@ -5,6 +5,7 @@ import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.domain.usecases.GetMyTokenTransactions
 import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
@@ -25,18 +26,25 @@ class MyTxsViewModel @Inject constructor(
     class MyTxsViewModelStateLogin : ViewState(false, listOf(), true)
     class MyTxsViewModelStateError(val errorMessage: String) : ViewState(false, listOf(), true)
 
+    fun getTransactionsWithToken(address: String, token: String) : Single<List<TransactionsResponse>> =
+        Observable.fromSingle(getMyTokenTransfers(address, token))
+            .concatMapIterable { it }
+            .concatMap {
+                if(it.originalTxHash != null)
+                    Observable.fromSingle(getTransactionWithHash(it.originalTxHash!!))
+                else
+                    Observable.just(it)
+            }.toList()
+            .subscribeOn(mySchedulers.io)
+            .observeOn(mySchedulers.main)
 
-    fun getMyTokenTransfers(address: String, token: String)
+    private fun getMyTokenTransfers(address: String, token: String)
     : Single<List<TransactionsResponse>> =
         useCase.getMyTokenTransfers(address, token)
-            .subscribeOn(mySchedulers.io)
-            .observeOn(mySchedulers.main)
 
-    fun getTransactionWithHash(txHash: String)
+    private fun getTransactionWithHash(txHash: String)
     : Single<TransactionsResponse> =
         useCase.getTransactionWithHash(txHash)
-            .subscribeOn(mySchedulers.io)
-            .observeOn(mySchedulers.main)
 
     fun getAllTokensOnJexchange(): Single<MutableList<String>> =
         useCase.getAllTokensOnJexchange()

@@ -8,15 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.explwa.jexchange.app.module.mytxs.utils.Utils
 import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.databinding.ViewHolderMyTokenTransferBinding
-import com.explwa.jexchange.presenter.viewModels.MyTxsViewModel
-import io.reactivex.rxjava3.kotlin.subscribeBy
 
 // Recycler View Adapter into List Adapter
 // https://medium.com/codex/stop-using-recyclerview-adapter-27c77666512b
 
 class MyTxsListAdapter(
-    data: List<TransactionsResponse>,
-    private val viewModel: MyTxsViewModel
+    data: List<TransactionsResponse>
 ) : ListAdapter<TransactionsResponse, MyTxsListAdapter.ViewHolder>(callback) {
 
     companion object {
@@ -62,22 +59,20 @@ class MyTxsListAdapter(
         fun bind (transactionsResponse: TransactionsResponse) {
             with(binding) {
                 textviewDate.text = Utils.getDateTime(transactionsResponse.timestamp.toString())
-                textviewAmountToken1.text = Utils.fromBigIntegerToBigDecimal(
-                    transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.value,
-                    transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.decimals
-                ).toPlainString()
 
-                textviewNameToken.text =
-                    transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.ticker.toString()
+                if(!transactionsResponse.action?.argumentsResponse?.transfers.isNullOrEmpty())
+                    textviewAmountToken1.text = Utils.fromBigIntegerToBigDecimal(
+                        transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.value,
+                        transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.decimals
+                    ).toPlainString()
+                else textviewAmountToken1.text = ""
 
-                if (transactionsResponse.originalTxHash != null) {
-                    viewModel.getTransactionWithHash(transactionsResponse.originalTxHash!!)
-                        .subscribeBy {
-                            textviewAction.text = it.function.toString()
-                        }
-                } else {
-                    textviewAction.text = transactionsResponse.function.toString()
-                }
+                if(!transactionsResponse.action?.argumentsResponse?.transfers.isNullOrEmpty())
+                    textviewNameToken.text =
+                        transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.ticker.toString()
+                else textviewNameToken.text = ""
+
+                textviewAction.text = transactionsResponse.function.toString()
             }
         }
 

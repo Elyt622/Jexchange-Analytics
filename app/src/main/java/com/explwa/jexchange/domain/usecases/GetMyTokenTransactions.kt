@@ -21,7 +21,7 @@ class GetMyTokenTransactions @Inject constructor(
                         repository.getMyTokenTransfers(
                             username.address.toString(),
                             token,
-                            size,
+                            13,
                             0
                         )
                     }
@@ -33,7 +33,7 @@ class GetMyTokenTransactions @Inject constructor(
                         repository.getMyTokenTransfers(
                             address,
                             token,
-                            size,
+                            13,
                             0
                         )
                     }

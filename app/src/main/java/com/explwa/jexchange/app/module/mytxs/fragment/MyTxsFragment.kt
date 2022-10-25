@@ -47,7 +47,7 @@ class MyTxsFragment : Fragment() {
 
         binding.buttonCheckHerotagAddress.setOnClickListener {
             updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
-            viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString(), "JEX-9040ca")
+            viewModel.getTransactionsWithToken(binding.editTextAddressHerotag.text.toString(), "JEX-9040ca")
                 .subscribeBy (
                     onSuccess = { txsList ->
                         updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
@@ -78,7 +78,7 @@ class MyTxsFragment : Fragment() {
                     rvMyTransactions.isGone = true
                 }
                 is MyTxsViewModel.MyTxsViewModelStateSuccess -> {
-                    rvMyTransactions.adapter = MyTxsListAdapter(state.myTxs, viewModel)
+                    rvMyTransactions.adapter = MyTxsListAdapter(state.myTxs)
                     progressCircular.isGone = state.progressBarIsGone
                     rvMyTransactions.isGone = false
                     materialCardViewAutocomplete.isGone = false
@@ -120,18 +120,21 @@ class MyTxsFragment : Fragment() {
             autocompleteSearch.onItemClickListener =
                 AdapterView.OnItemClickListener { _, _, _, _ ->
                     updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
-                    viewModel.getMyTokenTransfers(binding.editTextAddressHerotag.text.toString(), autocompleteSearch.text.toString())
-                        .subscribeBy (
-                            onSuccess = { txsList ->
-                                updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
-                            },
-                            onError = {
-                                updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
-                                updateUi(MyTxsViewModel.MyTxsViewModelStateError(
-                                    "The address or herotag is invalid")
-                                )
-                            }
-                        )
+                    viewModel.getTransactionsWithToken(
+                        binding.editTextAddressHerotag.text.toString(),
+                        autocompleteSearch.text.toString()
+                    ).subscribeBy (
+                        onSuccess = { txsList ->
+                            updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
+                                    },
+                        onError = {
+                            updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
+                            updateUi(
+                                MyTxsViewModel.MyTxsViewModelStateError(
+                                "The address or herotag is invalid")
+                            )
+                        }
+                    )
                 }
         }
     }
@@ -139,7 +142,7 @@ class MyTxsFragment : Fragment() {
     private fun configRecyclerView() {
         with(binding) {
             rvMyTransactions.layoutManager = LinearLayoutManager(requireContext())
-            rvMyTransactions.adapter = MyTxsListAdapter(listOf(), viewModel)
+            rvMyTransactions.adapter = MyTxsListAdapter(listOf())
         }
     }
 }
