@@ -1,7 +1,6 @@
 package com.explwa.jexchange.data.response.elrond
 
 import com.google.gson.annotations.SerializedName
-import java.math.BigInteger
 
 
 data class TransactionsResponse (
@@ -26,5 +25,6 @@ data class TransactionsResponse (
     @SerializedName("type") var type : String? = null,
     @SerializedName("originalTxHash") var originalTxHash : String? = null,
     @SerializedName("price") var price : Double? = null,
+    @SerializedName("operations") var operations : ArrayList<OperationsResponse>? = arrayListOf()
 
 )
