@@ -1,7 +1,7 @@
 package com.explwa.jexchange.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.explwa.jexchange.data.response.elrond.TransactionsResponse
+import com.explwa.jexchange.domain.models.DomainTransaction
 import com.explwa.jexchange.domain.usecases.GetMyTokenTransactions
 import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,16 +17,18 @@ class MyTxsViewModel @Inject constructor(
 
     sealed class ViewState(
         val loginIsGone : Boolean,
-        val myTxs : List<TransactionsResponse>,
+        val myTxs : List<DomainTransaction>,
         val progressBarIsGone: Boolean,
     )
 
     class MyTxsViewModelStateLoading : ViewState(true, listOf(), false)
-    class MyTxsViewModelStateSuccess(myTxs : List<TransactionsResponse>) : ViewState(true, myTxs, true)
+    class MyTxsViewModelStateSuccess(myTxs : List<DomainTransaction>) : ViewState(true, myTxs, true)
     class MyTxsViewModelStateLogin : ViewState(false, listOf(), true)
     class MyTxsViewModelStateError(val errorMessage: String) : ViewState(false, listOf(), true)
 
-    fun getTransactionsWithToken(address: String, token: String) : Single<List<TransactionsResponse>> =
+
+    fun getTransactionsWithToken(address: String, token: String)
+    : Single<List<DomainTransaction>> =
         Observable.fromSingle(getMyTokenTransfers(address, token))
             .concatMapIterable { it }
             .concatMap {
@@ -39,11 +41,11 @@ class MyTxsViewModel @Inject constructor(
             .observeOn(mySchedulers.main)
 
     private fun getMyTokenTransfers(address: String, token: String)
-    : Single<List<TransactionsResponse>> =
+    : Single<List<DomainTransaction>> =
         useCase.getMyTokenTransfers(address, token)
 
     private fun getTransactionWithHash(txHash: String)
-    : Single<TransactionsResponse> =
+    : Single<DomainTransaction> =
         useCase.getTransactionWithHash(txHash)
 
     fun getAllTokensOnJexchange(): Single<MutableList<String>> =

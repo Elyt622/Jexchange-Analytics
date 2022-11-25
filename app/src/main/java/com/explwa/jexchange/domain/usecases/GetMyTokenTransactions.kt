@@ -1,6 +1,6 @@
 package com.explwa.jexchange.domain.usecases
 
-import com.explwa.jexchange.data.response.elrond.TransactionsResponse
+import com.explwa.jexchange.domain.models.DomainTransaction
 import com.explwa.jexchange.domain.repositories.TransactionsRepository
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
@@ -11,7 +11,7 @@ class GetMyTokenTransactions @Inject constructor(
 ) {
 
     fun getMyTokenTransfers(address: String, token: String)
-    : Single<List<TransactionsResponse>> =
+    : Single<List<DomainTransaction>> =
         repository.getAddressWithUsername(address)
             .flatMap { username ->
                 repository.getMyTokenTransfersCount(
@@ -43,7 +43,7 @@ class GetMyTokenTransactions @Inject constructor(
             }
 
     fun getTransactionWithHash(txHash: String)
-    : Single<TransactionsResponse> =
+    : Single<DomainTransaction> =
         repository.getTransactionWithHash(txHash)
 
     fun getAllTokensOnJexchange()

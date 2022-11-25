@@ -1,6 +1,6 @@
 package com.explwa.jexchange.domain.usecases
 
-import com.explwa.jexchange.data.response.elrond.TransactionsResponse
+import com.explwa.jexchange.domain.models.DomainTransaction
 import com.explwa.jexchange.domain.repositories.StakingRepository
 import io.reactivex.rxjava3.core.Single
 import java.math.BigInteger
@@ -69,7 +69,7 @@ class GetStakingJex @Inject constructor(
             }
 
     private fun sumBigInteger(
-        txs: List<TransactionsResponse>,
+        txs: List<DomainTransaction>,
         enterStaking : Boolean
     ): BigInteger {
         var int = BigInteger("0")

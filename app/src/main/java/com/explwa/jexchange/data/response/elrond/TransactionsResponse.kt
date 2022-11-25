@@ -1,5 +1,8 @@
 package com.explwa.jexchange.data.response.elrond
 
+import com.explwa.jexchange.domain.DomainModelConvertible
+import com.explwa.jexchange.domain.models.DomainOperation
+import com.explwa.jexchange.domain.models.DomainTransaction
 import com.google.gson.annotations.SerializedName
 
 
@@ -27,4 +30,31 @@ data class TransactionsResponse (
     @SerializedName("price") var price : Double? = null,
     @SerializedName("operations") var operations : ArrayList<OperationsResponse>? = arrayListOf()
 
-)
+) : DomainModelConvertible<DomainTransaction> {
+
+    override fun toDomain() : DomainTransaction {
+
+        val domainOperations : ArrayList<DomainOperation> = arrayListOf()
+        operations?.let {
+            for (operation in it) {
+                domainOperations.add(operation.toDomain())
+            }
+        }
+
+        return DomainTransaction(
+            txHash = txHash,
+            receiver = receiver,
+            sender = sender,
+            value = value,
+            fee = fee,
+            timestamp = timestamp,
+            data = data,
+            function = function,
+            action = action,
+            type = type,
+            originalTxHash = originalTxHash,
+            price = price,
+            operations = domainOperations
+        )
+    }
+}

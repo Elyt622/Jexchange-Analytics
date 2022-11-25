@@ -1,8 +1,8 @@
 package com.explwa.jexchange.data.network.api
 
 import com.explwa.jexchange.data.response.elrond.TokenResponse
-import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.data.response.elrond.UsernameResponse
+import com.explwa.jexchange.domain.models.DomainTransaction
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -25,7 +25,7 @@ interface ElrondApi {
         @Query("token") token: String,
         @Query("size") size: Int,
         @Query("from") from: Int
-    ) : Single<List<TransactionsResponse>>
+    ) : Single<List<DomainTransaction>>
 
     @GET("/accounts/{address}/transfers/count?status=success")
     fun getMyTokenTransfersCount(
@@ -44,7 +44,7 @@ interface ElrondApi {
     @GET("/transactions/{txHash}")
     fun getTransactionWithHash(
         @Path("txHash") txHash: String
-    ) : Single<TransactionsResponse>
+    ) : Single<DomainTransaction>
 
     // Staking
     // Enter Staking
@@ -52,7 +52,7 @@ interface ElrondApi {
     fun getEnterStaking(
         @Path("address") address: String,
         @Query("size") size: Int
-    ) : Single<List<TransactionsResponse>>
+    ) : Single<List<DomainTransaction>>
 
     @GET("/accounts/{address}/transactions/count?status=success&function=enter_staking")
     fun getEnterStakingCount(
@@ -64,7 +64,7 @@ interface ElrondApi {
     fun getExitStaking(
         @Path("address") address: String,
         @Query("size") size: Int
-    ) : Single<List<TransactionsResponse>>
+    ) : Single<List<DomainTransaction>>
 
     @GET("/accounts/{address}/transactions/count?status=success&function=exit_staking")
     fun getExitStakingCount(
@@ -77,7 +77,7 @@ interface ElrondApi {
     fun getExitStakingWithPenalty(
         @Path("address") address: String,
         @Query("size") size: Int
-    ) : Single<List<TransactionsResponse>>
+    ) : Single<List<DomainTransaction>>
 
     @GET("/accounts/{address}/transactions/count?status=success&function=exit_staking_with_penalty")
     fun getExitStakingWithPenaltyCount(

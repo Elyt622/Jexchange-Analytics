@@ -1,5 +1,7 @@
 package com.explwa.jexchange.data.response.elrond
 
+import com.explwa.jexchange.domain.DomainModelConvertible
+import com.explwa.jexchange.domain.models.DomainUser
 import com.google.gson.annotations.SerializedName
 
 
@@ -15,4 +17,15 @@ data class UsernameResponse (
     @SerializedName("username") var username : String? = null,
     @SerializedName("developerReward") var developerReward : String? = null
 
-)
+) : DomainModelConvertible<DomainUser> {
+
+    override fun toDomain(): DomainUser =
+        DomainUser(
+            address = address.toString(),
+            herotag = username,
+            balance = balance,
+            shard = shard,
+            txCount = txCount,
+            stakingJex = null
+        )
+}

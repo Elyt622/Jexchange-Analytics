@@ -6,27 +6,27 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.explwa.jexchange.app.module.mytxs.utils.Utils
-import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.databinding.ViewHolderMyTokenTransferBinding
+import com.explwa.jexchange.domain.models.DomainTransaction
 
 // Recycler View Adapter into List Adapter
 // https://medium.com/codex/stop-using-recyclerview-adapter-27c77666512b
 
 class MyTxsListAdapter(
-    data: List<TransactionsResponse>
-) : ListAdapter<TransactionsResponse, MyTxsListAdapter.ViewHolder>(callback) {
+    data: List<DomainTransaction>
+) : ListAdapter<DomainTransaction, MyTxsListAdapter.ViewHolder>(callback) {
 
     companion object {
-        val callback = object : DiffUtil.ItemCallback<TransactionsResponse>() {
-            override fun areItemsTheSame(oldItem: TransactionsResponse, newItem: TransactionsResponse) =
+        val callback = object : DiffUtil.ItemCallback<DomainTransaction>() {
+            override fun areItemsTheSame(oldItem: DomainTransaction, newItem: DomainTransaction) =
                 oldItem.originalTxHash == newItem.originalTxHash
 
-            override fun areContentsTheSame(oldItem: TransactionsResponse, newItem: TransactionsResponse) =
+            override fun areContentsTheSame(oldItem: DomainTransaction, newItem: DomainTransaction) =
                 oldItem == newItem
         }
     }
 
-    var list: List<TransactionsResponse>
+    var list: List<DomainTransaction>
         get() = currentList
         set(value) {
             submitList(value)
@@ -56,7 +56,7 @@ class MyTxsListAdapter(
 
     inner class ViewHolder(private val binding: ViewHolderMyTokenTransferBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind (transactionsResponse: TransactionsResponse) {
+        fun bind (transactionsResponse: DomainTransaction) {
             with(binding) {
                 textviewDate.text = Utils.getDateTime(transactionsResponse.timestamp.toString())
 
