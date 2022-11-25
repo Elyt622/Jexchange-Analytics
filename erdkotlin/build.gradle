@@ -1,0 +1,30 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+    id 'maven-publish'
+}
+
+ext {
+    pomVersion = '0.5.2'
+    pomGroupID = "com.asaddour.erdkotlin" // development version
+    artifactName = "erdkotlin"
+}
+
+apply from: 'publishingConfiguration.gradle'
+
+java {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'org.bitcoinj:bitcoinj-core:0.16.1'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
+    implementation 'org.slf4j:slf4j-simple:2.0.3'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:4.0.0'
+}
