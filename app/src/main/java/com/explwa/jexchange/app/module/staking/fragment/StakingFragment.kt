@@ -35,14 +35,6 @@ class StakingFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getStakingJex("cryptojavier")
-            .subscribeBy{
-                Log.d("DEBUG", it.toString())
-            }
-    }
-
     private fun configRecyclerView() {
         with(binding) {
             recyclerViewStakingRewards.layoutManager = LinearLayoutManager(context)

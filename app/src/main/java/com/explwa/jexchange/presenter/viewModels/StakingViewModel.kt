@@ -6,7 +6,6 @@ import com.explwa.jexchange.domain.usecases.GetStakingRewards
 import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Single
-import java.math.BigInteger
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,9 +20,4 @@ class StakingViewModel @Inject constructor(
             .observeOn(mySchedulers.main)
     }
 
-    fun getStakingJex(address: String) : Single<BigInteger> {
-        return stakingUseCase.getStaking(address)
-            .subscribeOn(mySchedulers.io)
-            .observeOn(mySchedulers.main)
-    }
 }

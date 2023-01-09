@@ -10,18 +10,6 @@ interface StakingRepository {
 
     fun getStakingRewards() : Single<List<TokenResponse>>
 
-    fun getEnterStaking(address: String, size: Int): Single<List<DomainTransaction>>
-
-    fun getEnterStakingCount(address: String): Single<Int>
-
-    fun getExitStaking(address: String, size: Int): Single<List<DomainTransaction>>
-
-    fun getExitStakingCount(address: String): Single<Int>
-
-    fun getExitStakingWithPenalty(address: String, size: Int): Single<List<DomainTransaction>>
-
-    fun getExitStakingWithPenaltyCount(address: String): Single<Int>
-
     fun getAddressWithUsername(username: String): Single<UsernameResponse>
 
 }
