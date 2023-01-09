@@ -20,7 +20,7 @@ object NetworkModule {
     @Singleton
     fun providesElrondApi(): ElrondApi =
         Retrofit.Builder()
-            .baseUrl("https://api.elrond.com/")
+            .baseUrl("https://api.multiversx.com/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build().create(ElrondApi::class.java)
