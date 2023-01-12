@@ -4,29 +4,39 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.explwa.jexchange.app.module.mytxs.utils.Utils
+import com.explwa.jexchange.app.module.mytxs.viewHolder.ProgressViewHolder
+import com.explwa.jexchange.app.module.mytxs.viewHolder.TxViewHolder
+import com.explwa.jexchange.app.protocols.CellSelectionDelegate
+import com.explwa.jexchange.app.utils.BaseViewHolder
 import com.explwa.jexchange.databinding.ViewHolderMyTokenTransferBinding
-import com.explwa.jexchange.domain.models.DomainTransaction
+import com.explwa.jexchange.databinding.ViewHolderProgressBinding
+import com.explwa.jexchange.presenter.model.UITxItem
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 // Recycler View Adapter into List Adapter
 // https://medium.com/codex/stop-using-recyclerview-adapter-27c77666512b
 
 class MyTxsListAdapter(
-    data: List<DomainTransaction>
-) : ListAdapter<DomainTransaction, MyTxsListAdapter.ViewHolder>(callback) {
+    data: List<UITxItem>
+) : ListAdapter<UITxItem, BaseViewHolder<UITxItem>>(callback), CellSelectionDelegate {
+
+    val txClickSubject: PublishSubject<Int> = PublishSubject.create()
+    val displayProgressSubject: PublishSubject<Unit> = PublishSubject.create()
 
     companion object {
-        val callback = object : DiffUtil.ItemCallback<DomainTransaction>() {
-            override fun areItemsTheSame(oldItem: DomainTransaction, newItem: DomainTransaction) =
-                oldItem.originalTxHash == newItem.originalTxHash
+        val callback = object : DiffUtil.ItemCallback<UITxItem>() {
+            override fun areItemsTheSame(oldItem: UITxItem, newItem: UITxItem) =
+                oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: DomainTransaction, newItem: DomainTransaction) =
+            override fun areContentsTheSame(oldItem: UITxItem, newItem: UITxItem) =
                 oldItem == newItem
         }
+
+        const val TX_VIEW_TYPE = 0
+        const val LOAD_MORE_VIEW_TYPE = 1
     }
 
-    var list: List<DomainTransaction>
+    var list: List<UITxItem>
         get() = currentList
         set(value) {
             submitList(value)
@@ -36,45 +46,52 @@ class MyTxsListAdapter(
         list = data
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ViewHolderMyTokenTransferBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<UITxItem> {
+        return when (viewType) {
+            TX_VIEW_TYPE -> {
+                val itemBinding = ViewHolderMyTokenTransferBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                TxViewHolder(itemBinding)
+            }
+            LOAD_MORE_VIEW_TYPE -> {
+                val itemBinding = ViewHolderProgressBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                ProgressViewHolder(itemBinding)
+            }
+            else -> throw IllegalStateException("Invalid viewType")
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
+    override fun getItemViewType(position: Int): Int =
+        when(getItem(position)) {
+            is UITxItem.Cell -> TX_VIEW_TYPE
+            is UITxItem.Progress -> LOAD_MORE_VIEW_TYPE
+        }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    inner class ViewHolder(private val binding: ViewHolderMyTokenTransferBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind (transactionsResponse: DomainTransaction) {
-            with(binding) {
-                textviewDate.text = Utils.getDateTime(transactionsResponse.timestamp.toString())
-
-                if(!transactionsResponse.action?.argumentsResponse?.transfers.isNullOrEmpty())
-                    textviewAmountToken1.text = Utils.fromBigIntegerToBigDecimal(
-                        transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.value,
-                        transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.decimals
-                    ).toPlainString()
-                else textviewAmountToken1.text = ""
-
-                if(!transactionsResponse.action?.argumentsResponse?.transfers.isNullOrEmpty())
-                    textviewNameToken.text =
-                        transactionsResponse.action?.argumentsResponse?.transfers?.get(0)?.ticker.toString()
-                else textviewNameToken.text = ""
-
-                textviewAction.text = transactionsResponse.function.toString()
+    override fun onBindViewHolder(holder: BaseViewHolder<UITxItem>, position: Int) {
+        when (holder) {
+            is TxViewHolder -> {
+                val model = getItem(position)
+                holder.onBind(model)
+            }
+            is ProgressViewHolder -> {
+                displayProgressSubject.onNext(Unit)
             }
         }
+    }
 
+    override fun didSelectCellAt(index: Int) {
+        val item = getItem(index)
+        txClickSubject.onNext(index)
     }
 }

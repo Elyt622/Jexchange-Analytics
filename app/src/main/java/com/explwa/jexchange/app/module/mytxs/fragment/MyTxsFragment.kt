@@ -17,6 +17,7 @@ import com.explwa.jexchange.databinding.FragmentMyTxsBinding
 import com.explwa.jexchange.presenter.viewModels.MyTxsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 
 @AndroidEntryPoint
@@ -26,9 +27,13 @@ class MyTxsFragment : Fragment() {
         fun newInstance() = MyTxsFragment()
     }
 
+    private var viewCreatedSubject: BehaviorSubject<Unit> = BehaviorSubject.create()
+
     private val viewModel: MyTxsViewModel by viewModels()
 
     private lateinit var binding : FragmentMyTxsBinding
+
+    var adapter = MyTxsListAdapter(listOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,15 +47,21 @@ class MyTxsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewCreatedSubject.onNext(Unit)
 
         updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
 
         binding.buttonCheckHerotagAddress.setOnClickListener {
             updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
-            viewModel.getTransactionsWithToken(binding.editTextAddressHerotag.text.toString(), "JEX-9040ca")
+            viewModel.getViewState(
+                "erd1fdq6nmaa62c0cz8f299ycsz0q8lyfr7q87gqpjwnweux5uu9pqcq68ejhz",
+                "JEX-9040ca",
+                viewCreatedSubject,
+                adapter.displayProgressSubject
+            )
                 .subscribeBy (
-                    onSuccess = { txsList ->
-                        updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
+                    onNext = { txsList ->
+                        updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList.myTxs))
                     },
                     onError = {
                         updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
@@ -78,7 +89,7 @@ class MyTxsFragment : Fragment() {
                     rvMyTransactions.isGone = true
                 }
                 is MyTxsViewModel.MyTxsViewModelStateSuccess -> {
-                    rvMyTransactions.adapter = MyTxsListAdapter(state.myTxs)
+                    adapter.submitList(state.myTxs)
                     progressCircular.isGone = state.progressBarIsGone
                     rvMyTransactions.isGone = false
                     materialCardViewAutocomplete.isGone = false
@@ -119,13 +130,17 @@ class MyTxsFragment : Fragment() {
 
             autocompleteSearch.onItemClickListener =
                 AdapterView.OnItemClickListener { _, _, _, _ ->
+
                     updateUi(MyTxsViewModel.MyTxsViewModelStateLoading())
-                    viewModel.getTransactionsWithToken(
+
+                    viewModel.getViewState(
                         binding.editTextAddressHerotag.text.toString(),
-                        autocompleteSearch.text.toString()
+                        autocompleteSearch.text.toString(),
+                        viewCreatedSubject,
+                        adapter.displayProgressSubject
                     ).subscribeBy (
-                        onSuccess = { txsList ->
-                            updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList))
+                        onNext = { txsList ->
+                            updateUi(MyTxsViewModel.MyTxsViewModelStateSuccess(txsList.myTxs))
                                     },
                         onError = {
                             updateUi(MyTxsViewModel.MyTxsViewModelStateLogin())
@@ -142,7 +157,7 @@ class MyTxsFragment : Fragment() {
     private fun configRecyclerView() {
         with(binding) {
             rvMyTransactions.layoutManager = LinearLayoutManager(requireContext())
-            rvMyTransactions.adapter = MyTxsListAdapter(listOf())
+            rvMyTransactions.adapter = adapter
         }
     }
 }

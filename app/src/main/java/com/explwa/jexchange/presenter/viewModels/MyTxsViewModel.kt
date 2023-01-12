@@ -1,55 +1,70 @@
 package com.explwa.jexchange.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.explwa.jexchange.domain.models.DomainTransaction
+import com.explwa.jexchange.domain.usecases.GetAllTokens
 import com.explwa.jexchange.domain.usecases.GetMyTokenTransactions
+import com.explwa.jexchange.presenter.model.UITxItem
+import com.explwa.jexchange.presenter.model.mapping.toUIItem
 import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 @HiltViewModel
 class MyTxsViewModel @Inject constructor(
-    private val useCase: GetMyTokenTransactions,
+    private val useCase1: GetAllTokens,
+    private val useCase2: GetMyTokenTransactions,
     private val mySchedulers: MySchedulers
     ) : ViewModel() {
 
     sealed class ViewState(
         val loginIsGone : Boolean,
-        val myTxs : List<DomainTransaction>,
+        val myTxs : List<UITxItem>,
         val progressBarIsGone: Boolean,
     )
 
     class MyTxsViewModelStateLoading : ViewState(true, listOf(), false)
-    class MyTxsViewModelStateSuccess(myTxs : List<DomainTransaction>) : ViewState(true, myTxs, true)
+    class MyTxsViewModelStateSuccess(myTxs : List<UITxItem>) : ViewState(true, myTxs, true)
     class MyTxsViewModelStateLogin : ViewState(false, listOf(), true)
     class MyTxsViewModelStateError(val errorMessage: String) : ViewState(false, listOf(), true)
 
 
-    fun getTransactionsWithToken(address: String, token: String)
-    : Single<List<DomainTransaction>> =
-        Observable.fromSingle(getMyTokenTransfers(address, token))
-            .concatMapIterable { it }
-            .concatMap {
-                if(it.originalTxHash != null)
-                    Observable.fromSingle(getTransactionWithHash(it.originalTxHash!!))
-                else
-                    Observable.just(it)
-            }.toList()
-            .subscribeOn(mySchedulers.io)
+    fun getViewState(
+        address: String,
+        token: String,
+        viewCreated: Observable<Unit>,
+        displayProgress: Observable<Unit>
+    ): Observable<ViewState> =
+        Observable.merge(
+            viewCreated.map { false },
+            displayProgress.map { false },
+        )
+            .toFlowable(BackpressureStrategy.DROP) //load/refresh should be finished before load/refresh again
+            .toObservable()
+            .flatMap {
+                useCase2.invoke(
+                    address,
+                    token,
+                    refresh = true
+                )
+            }
             .observeOn(mySchedulers.main)
-
-    private fun getMyTokenTransfers(address: String, token: String)
-    : Single<List<DomainTransaction>> =
-        useCase.getMyTokenTransfers(address, token)
-
-    private fun getTransactionWithHash(txHash: String)
-    : Single<DomainTransaction> =
-        useCase.getTransactionWithHash(txHash)
+            .map { txPageList ->
+                val txList = txPageList.toUIItem()
+                if (txList.isEmpty()) {
+                    MyTxsViewModelStateLogin()
+                } else {
+                    MyTxsViewModelStateSuccess(txList)
+                }
+            }
+            .onErrorResumeNext {
+                Observable.just(MyTxsViewModelStateError("Error"))
+            }
 
     fun getAllTokensOnJexchange(): Single<MutableList<String>> =
-        useCase.getAllTokensOnJexchange()
+        useCase1.getAllTokensName()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
 
