@@ -1,8 +1,8 @@
 package com.explwa.jexchange.data.network.api
 
 import com.explwa.jexchange.data.response.elrond.TokenResponse
+import com.explwa.jexchange.data.response.elrond.TransactionsResponse
 import com.explwa.jexchange.data.response.elrond.UsernameResponse
-import com.explwa.jexchange.domain.models.DomainTransaction
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,7 +16,7 @@ interface ElrondApi {
         @Path("username") username: String
     ) : Single<UsernameResponse>
 
-    @GET("/accounts/erd1qqqqqqqqqqqqqpgqd3r2mh64wzcmuqtpmqs3tyluxsencr9w0y8qft6uyv/tokens?size=50")
+    @GET("/accounts/erd1272et87h3sa7hlg5keuswh50guz2ngmd6lhmjxkwwu0ah6gdds5qhka964/tokens?size=50")
     fun getStakingRewards() : Single<List<TokenResponse>>
 
     @GET("/accounts/{address}/transfers?status=success&order=desc")
@@ -25,7 +25,7 @@ interface ElrondApi {
         @Query("token") token: String,
         @Query("size") size: Int,
         @Query("from") from: Int
-    ) : Single<List<DomainTransaction>>
+    ) : Single<List<TransactionsResponse>>
 
     @GET("/accounts/{address}/transfers/count?status=success")
     fun getMyTokenTransfersCount(
@@ -44,6 +44,6 @@ interface ElrondApi {
     @GET("/transactions/{txHash}")
     fun getTransactionWithHash(
         @Path("txHash") txHash: String
-    ) : Single<DomainTransaction>
+    ) : Single<TransactionsResponse>
 
 }
