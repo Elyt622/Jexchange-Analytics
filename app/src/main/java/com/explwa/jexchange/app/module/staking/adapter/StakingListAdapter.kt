@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.explwa.jexchange.app.module.staking.utils.Utils
-import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.databinding.ViewHolderStakingBinding
+import com.explwa.jexchange.presenter.model.UITokenItem
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -16,20 +16,20 @@ import java.math.RoundingMode
 // https://medium.com/codex/stop-using-recyclerview-adapter-27c77666512b
 
 class StakingListAdapter(
-    data: List<TokenResponse>
-) : ListAdapter<TokenResponse, StakingListAdapter.ViewHolder>(callback) {
+    data: List<UITokenItem>
+) : ListAdapter<UITokenItem, StakingListAdapter.ViewHolder>(callback) {
 
     companion object {
-        val callback = object : DiffUtil.ItemCallback<TokenResponse>() {
-            override fun areItemsTheSame(oldItem: TokenResponse, newItem: TokenResponse) =
-                oldItem.identifier == newItem.identifier
+        val callback = object : DiffUtil.ItemCallback<UITokenItem>() {
+            override fun areItemsTheSame(oldItem: UITokenItem, newItem: UITokenItem) =
+                oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: TokenResponse, newItem: TokenResponse) =
+            override fun areContentsTheSame(oldItem: UITokenItem, newItem: UITokenItem) =
                 oldItem == newItem
         }
     }
 
-    var list: List<TokenResponse>
+    var list: List<UITokenItem>
         get() = currentList
         set(value) {
             submitList(value)
@@ -50,7 +50,7 @@ class StakingListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position) as UITokenItem.Cell)
     }
 
     override fun getItemCount(): Int {
@@ -59,27 +59,27 @@ class StakingListAdapter(
 
     inner class ViewHolder(private val binding: ViewHolderStakingBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind (tokenResponse: TokenResponse) {
+        fun bind (token: UITokenItem.Cell) {
             with(binding) {
-                textviewNameToken.text = tokenResponse.identifier?.substringBefore('-')
+                textviewNameToken.text = token.identifier?.substringBefore('-')
 
                 textviewNumberToken.text = Utils.fromBigIntegerToBigDecimal(
-                    tokenResponse.balance,
-                    tokenResponse.decimals
+                    token.balance,
+                    token.decimals
                 ).toPlainString()
 
-                if(tokenResponse.price != null)
+                if(token.price != null)
                     textviewTokensDollars.text = (Utils.fromBigIntegerToBigDecimal(
-                        tokenResponse.balance!!,
-                        tokenResponse.decimals
+                        token.balance!!,
+                        token.decimals
                     ) * BigDecimal(
-                        tokenResponse.price!!)
+                        token.price!!)
                             ).setScale(2, RoundingMode.DOWN)
                         .toPlainString()
                 else
                     textviewTokensDollars.text = ""
 
-                Glide.with(root.context).load(tokenResponse.assets?.pngUrl).into(imageViewToken)
+                Glide.with(root.context).load(token.pngUrl).into(imageViewToken)
             }
         }
 

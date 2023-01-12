@@ -1,8 +1,8 @@
 package com.explwa.jexchange.data.repositories
 
 import com.explwa.jexchange.data.network.api.ElrondApi
-import com.explwa.jexchange.data.response.elrond.TokenResponse
-import com.explwa.jexchange.data.response.elrond.UsernameResponse
+import com.explwa.jexchange.domain.models.DomainToken
+import com.explwa.jexchange.domain.models.DomainUser
 import com.explwa.jexchange.domain.repositories.StakingRepository
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
@@ -11,12 +11,17 @@ class StakingRepositoryImpl @Inject constructor(
     private val elrondApi: ElrondApi
 ) : StakingRepository {
 
-    override fun getStakingRewards(): Single<List<TokenResponse>> {
+    override fun getStakingRewards(): Single<List<DomainToken>> {
         return elrondApi.getStakingRewards()
+            .toObservable()
+            .flatMapIterable { it }
+            .map { it.toDomain() }
+            .toList()
     }
 
-    override fun getAddressWithUsername(username: String): Single<UsernameResponse> {
+    override fun getAddressWithUsername(username: String): Single<DomainUser> {
         return elrondApi.getAddressWithUsername(username)
+            .map { it.toDomain() }
     }
 
 }

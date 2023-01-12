@@ -1,8 +1,9 @@
 package com.explwa.jexchange.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.explwa.jexchange.data.response.elrond.TokenResponse
 import com.explwa.jexchange.domain.usecases.GetStakingRewards
+import com.explwa.jexchange.presenter.model.UITokenItem
+import com.explwa.jexchange.presenter.model.mapping.toUIItem
 import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Single
@@ -14,8 +15,12 @@ class StakingViewModel @Inject constructor(
     private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
-    fun getStakingRewards() : Single<List<TokenResponse>> {
+    fun getStakingRewards() : Single<List<UITokenItem>> {
         return rewardUseCase.getStakingRewards()
+            .toObservable()
+            .flatMapIterable { it }
+            .map { it.toUIItem() }
+            .toList()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
     }
