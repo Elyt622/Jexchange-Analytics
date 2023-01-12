@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadTokens() {
-        viewModel.getAllTokensOnJexchange()
+        viewModel.getAllTokens()
             .subscribeBy {
                 updateUi(HomeViewModel.HomeViewModelStateSuccess(it))
             }

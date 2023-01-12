@@ -1,8 +1,9 @@
 package com.explwa.jexchange.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.explwa.jexchange.domain.repositories.TransactionsRepository
-import com.explwa.jexchange.data.response.elrond.TokenResponse
+import com.explwa.jexchange.domain.usecases.GetAllTokens
+import com.explwa.jexchange.presenter.model.UITokenItem
+import com.explwa.jexchange.presenter.model.mapping.toUIItem
 import com.explwa.jexchange.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Single
@@ -10,24 +11,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: TransactionsRepository,
+    private val usecase: GetAllTokens,
     private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
     sealed class ViewState (
-        val tokens : List<TokenResponse>,
+        val tokens : List<UITokenItem>,
         val progressBarVisibility : Boolean
     )
 
     class HomeViewModelStateLoading : ViewState(listOf(), false)
-    class HomeViewModelStateSuccess(tokens: List<TokenResponse>) : ViewState(tokens, true)
+    class HomeViewModelStateSuccess(tokens: List<UITokenItem>) : ViewState(tokens, true)
 
-    fun getAllTokensOnJexchange(): Single<List<TokenResponse>> {
-        return repository.getTokensCountOnJexchange()
-            .flatMap { repository.getAllTokensOnJexchange(it) }
+    fun getAllTokens(): Single<List<UITokenItem>> {
+        return usecase.getAllTokens()
             .toObservable()
             .flatMapIterable { it }
-            .filter { it.price != null }
+            .map { it.toUIItem() }
             .toList()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
