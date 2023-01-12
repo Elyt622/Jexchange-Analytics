@@ -1,5 +1,7 @@
 package com.explwa.jexchange.data.response.elrond
 
+import com.explwa.jexchange.domain.DomainModelConvertible
+import com.explwa.jexchange.domain.models.DomainToken
 import com.google.gson.annotations.SerializedName
 
 
@@ -27,4 +29,44 @@ data class TokenResponse (
     @SerializedName("balance"           ) var balance           : String?  = null,
     @SerializedName("valueUsd"          ) var valueUsd          : Double?  = null
 
-)
+) : DomainModelConvertible<DomainToken> {
+
+    override fun toDomain(): DomainToken {
+        return DomainToken(
+            identifier,
+            name,
+            owner,
+            decimals,
+            isPaused,
+            transactions,
+            accounts,
+            canUpgrade,
+            canMint,
+            canBurn,
+            canChangeOwner,
+            canPause,
+            canFreeze,
+            canWipe,
+            price,
+            marketCap,
+            supply,
+            circulatingSupply,
+            balance,
+            valueUsd,
+            assets?.website,
+            assets?.description,
+            assets?.ledgerSignature,
+            assets?.status,
+            assets?.extraTokens!!,
+            assets?.pngUrl,
+            assets?.svgUrl,
+            assets?.socialResponse?.email,
+            assets?.socialResponse?.blog,
+            assets?.socialResponse?.twitter,
+            assets?.socialResponse?.whitepaper,
+            assets?.socialResponse?.coinmarketcap,
+            assets?.socialResponse?.coingecko
+        )
+    }
+
+}
