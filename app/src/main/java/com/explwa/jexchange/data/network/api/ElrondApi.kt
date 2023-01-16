@@ -12,8 +12,13 @@ import retrofit2.http.Query
 interface ElrondApi {
 
     @GET("/usernames/{username}")
-    fun getAddressWithUsername(
+    fun getAccountWithUsername(
         @Path("username") username: String
+    ) : Single<UsernameResponse>
+
+    @GET("/accounts/{address}")
+    fun getAccountWithAddress(
+        @Path("address") address: String
     ) : Single<UsernameResponse>
 
     @GET("/accounts/erd1272et87h3sa7hlg5keuswh50guz2ngmd6lhmjxkwwu0ah6gdds5qhka964/tokens?size=50")
