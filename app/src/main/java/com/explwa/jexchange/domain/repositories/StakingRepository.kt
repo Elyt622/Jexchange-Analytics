@@ -9,6 +9,6 @@ interface StakingRepository {
 
     fun getStakingRewards() : Single<List<DomainToken>>
 
-    fun getAddressWithUsername(username: String): Single<DomainUser>
+    fun getAccountWithUsername(username: String): Single<DomainUser>
 
 }

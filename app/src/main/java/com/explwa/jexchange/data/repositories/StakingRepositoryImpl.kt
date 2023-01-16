@@ -19,8 +19,8 @@ class StakingRepositoryImpl @Inject constructor(
             .toList()
     }
 
-    override fun getAddressWithUsername(username: String): Single<DomainUser> {
-        return elrondApi.getAddressWithUsername(username)
+    override fun getAccountWithUsername(username: String): Single<DomainUser> {
+        return elrondApi.getAccountWithUsername(username)
             .map { it.toDomain() }
     }
 
