@@ -1,4 +1,4 @@
-package com.explwa.jexchange.app.module.home.adapter
+package com.explwa.jexchange.app.module.marketplace.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.explwa.jexchange.app.module.home.utils.Utils
+import com.explwa.jexchange.app.module.marketplace.utils.Utils
 import com.explwa.jexchange.databinding.ViewHolderTokensBinding
 import com.explwa.jexchange.presenter.model.UITokenItem
 

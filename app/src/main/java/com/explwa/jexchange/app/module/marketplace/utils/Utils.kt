@@ -1,11 +1,7 @@
-package com.explwa.jexchange.app.module.home.utils
+package com.explwa.jexchange.app.module.marketplace.utils
 
 import java.lang.StringBuilder
-import java.math.BigDecimal
-import java.math.BigInteger
 import java.math.RoundingMode
-import java.text.SimpleDateFormat
-import java.util.*
 
 object Utils {
 

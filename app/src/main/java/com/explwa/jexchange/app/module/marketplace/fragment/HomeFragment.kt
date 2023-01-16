@@ -1,4 +1,4 @@
-package com.explwa.jexchange.app.module.home.fragment
+package com.explwa.jexchange.app.module.marketplace.fragment
 
 import android.content.Intent
 import android.net.Uri
@@ -10,7 +10,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.explwa.jexchange.app.module.home.adapter.TokenListAdapter
+import com.explwa.jexchange.app.module.marketplace.adapter.TokenListAdapter
 import com.explwa.jexchange.databinding.FragmentHomeBinding
 import com.explwa.jexchange.presenter.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint

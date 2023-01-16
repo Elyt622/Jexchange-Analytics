@@ -3,7 +3,7 @@ package com.explwa.jexchange.app.module.main.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.explwa.jexchange.app.module.home.fragment.HomeFragment
+import com.explwa.jexchange.app.module.marketplace.fragment.HomeFragment
 import com.explwa.jexchange.app.module.mytxs.fragment.MyTxsFragment
 import com.explwa.jexchange.app.module.staking.fragment.StakingFragment
 
