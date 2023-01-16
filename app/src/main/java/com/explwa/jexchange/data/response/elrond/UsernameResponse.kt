@@ -21,7 +21,7 @@ data class UsernameResponse (
 
     override fun toDomain(): DomainUser =
         DomainUser(
-            address = address.toString(),
+            address = address,
             herotag = username,
             balance = balance,
             shard = shard,

@@ -9,7 +9,9 @@ import io.reactivex.rxjava3.core.Single
 
 interface TransactionsRepository {
 
-    fun getAddressWithUsername(username: String) : Single<DomainUser>
+    fun getAccountWithUsername(username: String) : Single<DomainUser>
+
+    fun getAccountWithAddress(address: String) : Single<DomainUser>
 
     fun getTxPage(address: String, token: String, size: Int, from: Int) : Single<DomainTransactionPage>
 

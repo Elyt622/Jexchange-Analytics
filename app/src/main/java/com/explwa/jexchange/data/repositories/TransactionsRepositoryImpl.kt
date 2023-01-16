@@ -13,11 +13,19 @@ class TransactionsRepositoryImpl @Inject constructor(
     private val elrondApi: ElrondApi
 ) : TransactionsRepository {
 
-    // Get address with username
-    override fun getAddressWithUsername(username: String)
+    // Get account with username
+    override fun getAccountWithUsername(username: String)
     : Single<DomainUser> =
-        elrondApi.getAddressWithUsername(username)
+        elrondApi.getAccountWithUsername(username)
             .map { it.toDomain() }
+            .doOnError { }
+
+    // Get account with address
+    override fun getAccountWithAddress(address: String)
+            : Single<DomainUser> =
+        elrondApi.getAccountWithAddress(address)
+            .map { it.toDomain() }
+            .doOnError { }
 
     // Get transfers with a token
     override fun getTxPage(
