@@ -11,28 +11,28 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.explwa.jexchange.app.module.marketplace.adapter.TokenListAdapter
-import com.explwa.jexchange.databinding.FragmentHomeBinding
+import com.explwa.jexchange.databinding.FragmentMarketplaceBinding
 import com.explwa.jexchange.presenter.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class MarketplaceFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentMarketplaceBinding
 
     companion object {
-        fun newInstance() = HomeFragment()
+        fun newInstance() = MarketplaceFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentMarketplaceBinding.inflate(layoutInflater)
         return binding.root
     }
 

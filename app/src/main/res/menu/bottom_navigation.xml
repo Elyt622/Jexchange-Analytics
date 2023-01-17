@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/home"
-        android:title="@string/home"
-        android:icon="@drawable/ic_jex_logo"/>
+        android:title="@string/marketplace"
+        android:icon="@drawable/ic_monitoring_24px"/>
 
     <item
         android:id="@+id/analytics"
