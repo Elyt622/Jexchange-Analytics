@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 
 class GetAddress @Inject constructor(
-    private val repository: TransactionsRepository
+    private val repository: AccountRepository
 ){
 
     lateinit var address: Single<String>
