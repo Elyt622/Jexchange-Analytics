@@ -9,7 +9,7 @@ import com.explwa.jexchangeanalytics.domain.models.DomainAccount
 @Entity
 data class AccountEntity(
     @PrimaryKey
-    val address: String?,
+    val address: String,
     @ColumnInfo(name = "herotag")
     val herotag: String?,
     @ColumnInfo(name = "balance")

@@ -6,7 +6,7 @@ import com.explwa.jexchangeanalytics.domain.models.DomainAccount
 
 fun DomainAccount.toEntity(): AccountEntity =
     AccountEntity(
-        address,
+        address.toString(),
         herotag,
         balance,
         shard,
