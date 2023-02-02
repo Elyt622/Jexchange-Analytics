@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.core.Observable
 @Dao
 interface AccountDao {
     @Query("SELECT * FROM AccountEntity")
-    fun getAccount(): Observable<AccountEntity>
+    fun getAccount() : Observable<List<AccountEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAccount(account: AccountEntity): Completable

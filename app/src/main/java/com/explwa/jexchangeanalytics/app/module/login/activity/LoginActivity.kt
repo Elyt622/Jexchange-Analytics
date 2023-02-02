@@ -27,17 +27,21 @@ class LoginActivity : AppCompatActivity() {
 
         with(binding) {
             buttonCheckHerotagAddress.setOnClickListener {
-                viewModel.getAddress(
+                viewModel.setAccount(
                     editTextAddressHerotag.text.toString()
-                ).subscribeBy(
-                    onSuccess = {
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("ADDRESS", it)
-                        startActivity(intent)
-                    },
-                    onError = {
-                        Log.d("DEBUG", it.message.toString())
-                    })
+                ).subscribeBy (
+                        onSuccess = {
+                            viewModel.insertAccountInDB(it)
+                            val intent = Intent(
+                                this@LoginActivity,
+                                MainActivity::class.java
+                            )
+                            startActivity(intent)
+                        },
+                        onError = {
+                            Log.d("DEBUG", it.message.toString())
+                        }
+                    )
             }
         }
     }
