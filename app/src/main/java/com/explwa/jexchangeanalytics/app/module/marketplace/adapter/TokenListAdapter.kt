@@ -1,5 +1,7 @@
 package com.explwa.jexchangeanalytics.app.module.marketplace.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.explwa.jexchangeanalytics.app.module.marketplace.utils.Utils
+import com.explwa.jexchangeanalytics.app.module.token.TokenActivity
 import com.explwa.jexchangeanalytics.presenter.model.UITokenItem
 import com.explwa.jexchangeanalytics.databinding.ViewHolderTokensBinding
 
@@ -16,6 +19,8 @@ import com.explwa.jexchangeanalytics.databinding.ViewHolderTokensBinding
 class TokenListAdapter(
     data: List<UITokenItem>
 ) : ListAdapter<UITokenItem, TokenListAdapter.ViewHolder>(callback) {
+
+    lateinit var context: Context
 
     companion object {
         val callback = object : DiffUtil.ItemCallback<UITokenItem>() {
@@ -38,6 +43,7 @@ class TokenListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        context = parent.context
         return ViewHolder(
             ViewHolderTokensBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -64,6 +70,11 @@ class TokenListAdapter(
                 textviewTokenId.text = token.identifier
                 textviewPriceToken.text = Utils.toFormatString(token.price.toString())
                 textviewTokenName.text = token.name
+                materialCardView.setOnClickListener {
+                    val intent = Intent(context, TokenActivity::class.java)
+                    intent.putExtra("IDENTIFIER", token.identifier)
+                    context.startActivity(intent)
+                }
             }
         }
 
