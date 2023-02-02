@@ -18,4 +18,6 @@ interface TransactionsRepository {
 
     fun getTransactionWithHash(txHash: String) : Single<DomainTransaction>
 
+    fun getTokenPrice(idToken: String) : Single<Double>?
+
 }

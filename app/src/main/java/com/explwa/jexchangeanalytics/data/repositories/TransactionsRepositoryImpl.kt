@@ -1,6 +1,7 @@
 package com.explwa.jexchangeanalytics.data.repositories
 
 import com.explwa.jexchangeanalytics.data.network.api.ElrondApi
+import com.explwa.jexchangeanalytics.data.network.api.JexchangeService
 import com.explwa.jexchangeanalytics.domain.models.DomainToken
 import com.explwa.jexchangeanalytics.domain.models.DomainTransaction
 import com.explwa.jexchangeanalytics.domain.models.DomainTransactionPage
@@ -9,7 +10,8 @@ import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class TransactionsRepositoryImpl @Inject constructor(
-    private val elrondApi: ElrondApi
+    private val elrondApi: ElrondApi,
+    private val jexchangeService: JexchangeService
 ) : TransactionsRepository {
 
     // Get transfers with a token
@@ -45,14 +47,30 @@ class TransactionsRepositoryImpl @Inject constructor(
         elrondApi.getTransactionWithHash(txHash)
             .map { it.toDomain() }
 
+    override fun getTokenPrice(idToken: String)
+    : Single<Double> =
+        jexchangeService.getPriceForToken(idToken)
+            .map { it.rate!! }
+
+
     // Get all token used on Jexchange
     override fun getAllTokensOnJexchange(size: Int)
     : Single<List<DomainToken>> =
         elrondApi.getAllTokensOnJexchange(size)
             .toObservable()
             .flatMapIterable { it }
-            .map { it.toDomain() }
-            .toList()
+            .map { token ->
+                if (token.price != null)
+                    token.toDomain()
+                else {
+                    token.price = getTokenPrice(
+                        token.identifier.toString()
+                    ).blockingGet() // Bad I think but it work for now
+                    token.toDomain()
+                }
+            }.toSortedList(
+                compareByDescending { it.accounts }
+            )
 
     override fun getTokensCountOnJexchange()
     : Single<Int> = elrondApi.getTokensCountOnJexchange()
