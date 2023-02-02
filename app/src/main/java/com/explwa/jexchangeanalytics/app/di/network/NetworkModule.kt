@@ -1,6 +1,7 @@
 package com.explwa.jexchangeanalytics.app.di.network
 
 import com.explwa.jexchangeanalytics.data.network.api.ElrondApi
+import com.explwa.jexchangeanalytics.data.network.api.JexchangeService
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -24,4 +25,13 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build().create(ElrondApi::class.java)
+
+    @Provides
+    @Singleton
+    fun providesJexchangeService(): JexchangeService =
+        Retrofit.Builder()
+            .baseUrl("https://microservice.jexchange.io/")
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build().create(JexchangeService::class.java)
 }
