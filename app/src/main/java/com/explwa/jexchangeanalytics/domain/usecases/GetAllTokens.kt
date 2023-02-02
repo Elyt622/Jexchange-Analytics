@@ -11,7 +11,7 @@ class GetAllTokens @Inject constructor(
 ) {
 
     fun getAllTokensName()
-            : Single<MutableList<String>> =
+    : Single<MutableList<String>> =
         repository.getTokensCountOnJexchange()
             .flatMap { repository.getAllTokensOnJexchange(it) }
             .toObservable()
@@ -21,14 +21,9 @@ class GetAllTokens @Inject constructor(
             }.toList()
 
 
-    fun getAllTokens(): Single<List<DomainToken>> {
-        return repository.getTokensCountOnJexchange()
+    fun getAllTokens()
+    : Single<List<DomainToken>> =
+        repository.getTokensCountOnJexchange()
             .flatMap { repository.getAllTokensOnJexchange(it) }
-            .toObservable()
-            .flatMapIterable { it }
-            .filter { it.price != null }
-            .toList()
-
-    }
 
 }
