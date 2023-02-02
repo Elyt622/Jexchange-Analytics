@@ -21,7 +21,7 @@ interface ElrondApi {
         @Path("address") address: String
     ) : Single<UsernameResponse>
 
-    @GET("/accounts/erd1272et87h3sa7hlg5keuswh50guz2ngmd6lhmjxkwwu0ah6gdds5qhka964/tokens?size=50")
+    @GET("/accounts/erd1qqqqqqqqqqqqqpgqwkqnf30j7hj4r797kahr0p5t5nsksc8a73eqd732jd/tokens?size=50")
     fun getStakingRewards() : Single<List<TokenResponse>>
 
     @GET("/accounts/{address}/transfers?status=success&order=desc")
