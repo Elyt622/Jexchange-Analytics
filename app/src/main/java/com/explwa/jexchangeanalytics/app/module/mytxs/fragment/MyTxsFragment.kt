@@ -54,24 +54,30 @@ class MyTxsFragment : Fragment() {
         viewCreatedSubject.onNext(Unit)
 
         updateUi(MyTxsViewModel.ShowLoading())
-        viewModel.getViewState(
-            "erd1fdq6nmaa62c0cz8f299ycsz0q8lyfr7q87gqpjwnweux5uu9pqcq68ejhz",
-            "JEX-9040ca",
-            viewCreatedSubject,
-            adapter.displayProgressSubject,
-            binding.swipe.refreshes()
-        )
-            .subscribeBy (
-                onNext = { txsList ->
-                    updateUi(MyTxsViewModel.ShowTxs(txsList.myTxs))
-                    binding.swipe.isRefreshing = false
-                },
-                onError = {
-                    updateUi(MyTxsViewModel.ShowError(
-                        "The address or herotag is invalid")
-                    )
-                }
-            )
+
+        viewModel.account.invoke()
+            .subscribeBy { currentAccount ->
+                viewModel.getViewState(
+                    currentAccount.address.toString(),
+                    "JEX-9040ca",
+                    viewCreatedSubject,
+                    adapter.displayProgressSubject,
+                    binding.swipe.refreshes()
+                ).subscribeBy(
+                    onNext = { txsList ->
+                        Log.d("DEBUGGG", txsList.myTxs.size.toString())
+                        updateUi(MyTxsViewModel.ShowTxs(txsList.myTxs))
+                        binding.swipe.isRefreshing = false
+                    },
+                    onError = {
+                        updateUi(
+                            MyTxsViewModel.ShowError(
+                                "The address or herotag is invalid"
+                            )
+                        )
+                    }
+                )
+            }
     }
 
 
@@ -100,6 +106,7 @@ class MyTxsFragment : Fragment() {
         }
     }
 
+    @SuppressLint("CheckResult")
     private fun configAutocompleteTextView() {
         with(binding) {
             viewModel.getAllTokensOnJexchange()
@@ -128,14 +135,13 @@ class MyTxsFragment : Fragment() {
                     updateUi(MyTxsViewModel.ShowLoading())
 
                     viewModel.getViewState(
-                        "erd1fdq6nmaa62c0cz8f299ycsz0q8lyfr7q87gqpjwnweux5uu9pqcq68ejhz",
+                        "",
                         autocompleteSearch.text.toString(),
                         viewCreatedSubject,
                         adapter.displayProgressSubject,
                         binding.swipe.refreshes()
                     ).subscribeBy (
                         onNext = { txsList ->
-                            Log.d("DEBUG", autocompleteSearch.text.toString())
                             updateUi(MyTxsViewModel.ShowTxs(txsList.myTxs))
                             binding.swipe.isRefreshing = false
                                  },

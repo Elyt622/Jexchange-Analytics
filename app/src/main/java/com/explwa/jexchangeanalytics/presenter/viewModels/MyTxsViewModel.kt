@@ -1,6 +1,8 @@
 package com.explwa.jexchangeanalytics.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
+import com.explwa.jexchangeanalytics.domain.models.DomainAccount
+import com.explwa.jexchangeanalytics.domain.usecases.GetAddress
 import com.explwa.jexchangeanalytics.domain.usecases.GetAllTokens
 import com.explwa.jexchangeanalytics.domain.usecases.GetMyTokenTransactions
 import com.explwa.jexchangeanalytics.presenter.model.UITxItem
@@ -14,8 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyTxsViewModel @Inject constructor(
-    private val useCase1: GetAllTokens,
-    private val useCase2: GetMyTokenTransactions,
+    private val getAlltokens: GetAllTokens,
+    private val getMyTokenTxs: GetMyTokenTransactions,
+    private val getAddress: GetAddress,
     private val mySchedulers: MySchedulers
     ) : ViewModel() {
 
@@ -28,6 +31,10 @@ class MyTxsViewModel @Inject constructor(
     class ShowTxs(myTxs : List<UITxItem>) : ViewState(myTxs, true)
     class ShowError(val errorMessage: String) : ViewState(listOf(), true)
 
+    var account = fun(): Observable<DomainAccount> =
+        getAddress.getAccount()
+            .subscribeOn(mySchedulers.io)
+            .observeOn(mySchedulers.main)
 
     fun getViewState(
         address: String,
@@ -44,7 +51,7 @@ class MyTxsViewModel @Inject constructor(
             .toFlowable(BackpressureStrategy.DROP) //load/refresh should be finished before load/refresh again
             .toObservable()
             .flatMap {
-                useCase2.invoke(
+                getMyTokenTxs.invoke(
                     address,
                     token,
                     it
@@ -63,8 +70,9 @@ class MyTxsViewModel @Inject constructor(
                 Observable.just(ShowError("Error"))
             }
 
-    fun getAllTokensOnJexchange(): Single<MutableList<String>> =
-        useCase1.getAllTokensName()
+    fun getAllTokensOnJexchange()
+    : Single<MutableList<String>> =
+        getAlltokens.getAllTokensName()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
 
