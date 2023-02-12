@@ -41,6 +41,7 @@ android {
 def retrofit_version = "2.9.0"
 def paging_version = "3.2.0-alpha03"
 def roomVersion = '2.5.0'
+def splashScreenVersion = '1.0.0'
 
 dependencies {
 
@@ -64,6 +65,8 @@ dependencies {
 
     implementation "androidx.paging:paging-runtime:$paging_version"
     implementation "androidx.paging:paging-rxjava3:$paging_version"
+
+    implementation "androidx.core:core-splashscreen:$splashScreenVersion"
 
     //Room
     implementation "androidx.room:room-ktx:$roomVersion"
