@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="100dp"
         android:contentDescription="@string/jex_logo"
-        android:src="@drawable/ic_jex_logo"
+        android:src="@drawable/ic_monitoring_24px"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,9 +22,9 @@
         android:textStyle="bold"
         android:layout_marginTop="24dp"
         android:text="@string/app_name"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView_logo"
+        app:layout_constraintStart_toStartOf="@+id/imageView_logo"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
 
     <TextView
         android:id="@+id/textView3"
@@ -36,7 +36,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
 
     <EditText
         android:id="@+id/edit_text_address_herotag"
