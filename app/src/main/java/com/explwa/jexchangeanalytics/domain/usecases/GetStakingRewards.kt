@@ -12,8 +12,6 @@ class GetStakingRewards @Inject constructor(
         return repository.getStakingRewards()
             .toObservable()
             .flatMapIterable { it }
-            .filter {
-                it.identifier != "JEX-9040ca"
-            }.toList()
+            .toList()
     }
 }
