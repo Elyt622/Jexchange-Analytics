@@ -4,8 +4,10 @@ import com.explwa.jexchangeanalytics.data.repositories.AccountRepositoryImpl
 import com.explwa.jexchangeanalytics.domain.repositories.StakingRepository
 import com.explwa.jexchangeanalytics.domain.repositories.TransactionsRepository
 import com.explwa.jexchangeanalytics.data.repositories.StakingRepositoryImpl
+import com.explwa.jexchangeanalytics.data.repositories.TokenRepositoryImpl
 import com.explwa.jexchangeanalytics.data.repositories.TransactionsRepositoryImpl
 import com.explwa.jexchangeanalytics.domain.repositories.AccountRepository
+import com.explwa.jexchangeanalytics.domain.repositories.TokenRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -24,4 +26,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindAccountRepository(accountRepositoryImpl: AccountRepositoryImpl): AccountRepository
+
+    @Binds
+    abstract fun bindTokenRepository(tokenRepositoryImpl: TokenRepositoryImpl): TokenRepository
 }

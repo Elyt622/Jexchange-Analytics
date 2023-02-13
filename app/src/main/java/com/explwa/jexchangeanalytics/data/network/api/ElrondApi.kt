@@ -51,4 +51,9 @@ interface ElrondApi {
         @Path("txHash") txHash: String
     ) : Single<TransactionsResponse>
 
+    @GET("/tokens/{idToken}")
+    fun getTokenDetails(
+        @Path("idToken") idToken: String
+    ) : Single<TokenResponse>
+
 }
