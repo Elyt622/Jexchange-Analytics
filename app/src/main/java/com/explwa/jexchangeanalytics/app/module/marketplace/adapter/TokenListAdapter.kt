@@ -72,7 +72,7 @@ class TokenListAdapter(
                 textviewTokenName.text = token.name
                 materialCardView.setOnClickListener {
                     val intent = Intent(context, TokenActivity::class.java)
-                    intent.putExtra("IDENTIFIER", token.identifier)
+                    intent.putExtra("IDTOKEN", token.identifier)
                     context.startActivity(intent)
                 }
             }
