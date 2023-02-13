@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class MarketplaceViewModel @Inject constructor(
     private val usecase: GetAllTokens,
     private val mySchedulers: MySchedulers
 ) : ViewModel() {

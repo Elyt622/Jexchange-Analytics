@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.explwa.jexchangeanalytics.app.module.marketplace.adapter.TokenListAdapter
-import com.explwa.jexchangeanalytics.presenter.viewModels.HomeViewModel
+import com.explwa.jexchangeanalytics.presenter.viewModels.MarketplaceViewModel
 import com.explwa.jexchangeanalytics.databinding.FragmentMarketplaceBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 @AndroidEntryPoint
 class MarketplaceFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: MarketplaceViewModel by viewModels()
 
     private lateinit var binding: FragmentMarketplaceBinding
 
@@ -39,7 +39,7 @@ class MarketplaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        updateUi(HomeViewModel.HomeViewModelStateLoading())
+        updateUi(MarketplaceViewModel.HomeViewModelStateLoading())
         loadTokens()
 
         configRecyclerView()
@@ -51,13 +51,13 @@ class MarketplaceFragment : Fragment() {
         }
     }
 
-    private fun updateUi(state : HomeViewModel.ViewState) {
+    private fun updateUi(state : MarketplaceViewModel.ViewState) {
         with(binding) {
             when (state) {
-                is HomeViewModel.HomeViewModelStateLoading -> {
+                is MarketplaceViewModel.HomeViewModelStateLoading -> {
                     progressCircular.isGone = state.progressBarVisibility
                 }
-                is HomeViewModel.HomeViewModelStateSuccess -> {
+                is MarketplaceViewModel.HomeViewModelStateSuccess -> {
                     progressCircular.isGone = state.progressBarVisibility
                     recyclerViewTokens.adapter = TokenListAdapter(state.tokens)
                 }
@@ -75,7 +75,7 @@ class MarketplaceFragment : Fragment() {
     private fun loadTokens() {
         viewModel.getAllTokens()
             .subscribeBy {
-                updateUi(HomeViewModel.HomeViewModelStateSuccess(it))
+                updateUi(MarketplaceViewModel.HomeViewModelStateSuccess(it))
             }
     }
 
