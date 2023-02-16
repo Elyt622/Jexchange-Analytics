@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 
 
 @AndroidEntryPoint
-class MarketplaceFragment : Fragment() {
+class MarketplaceFragment : BaseFragment() {
 
     private val viewModel: MarketplaceViewModel by viewModels()
 

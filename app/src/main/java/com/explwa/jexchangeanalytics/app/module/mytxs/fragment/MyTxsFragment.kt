@@ -24,7 +24,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 
 @AndroidEntryPoint
-class MyTxsFragment : Fragment() {
+class MyTxsFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = MyTxsFragment()
