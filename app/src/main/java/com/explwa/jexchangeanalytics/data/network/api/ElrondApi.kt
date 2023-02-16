@@ -3,6 +3,7 @@ package com.explwa.jexchangeanalytics.data.network.api
 import com.explwa.jexchangeanalytics.data.response.elrond.TokenResponse
 import com.explwa.jexchangeanalytics.data.response.elrond.TransactionsResponse
 import com.explwa.jexchangeanalytics.data.response.elrond.UsernameResponse
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -43,8 +44,9 @@ interface ElrondApi {
 
     @GET("/accounts/erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2/tokens")
     fun getAllTokensOnJexchange(
-        @Query("size") size: Int
-    ) : Single<List<TokenResponse>>
+        @Query("size") size: Int,
+        @Query("from") from: Int
+    ) : Observable<List<TokenResponse>>
 
     @GET("/transactions/{txHash}")
     fun getTransactionWithHash(
