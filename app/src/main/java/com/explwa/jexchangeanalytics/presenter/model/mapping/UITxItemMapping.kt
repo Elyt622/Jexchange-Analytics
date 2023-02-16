@@ -1,9 +1,7 @@
 package com.explwa.jexchangeanalytics.presenter.model.mapping
 
-import com.explwa.jexchangeanalytics.domain.models.DomainToken
 import com.explwa.jexchangeanalytics.domain.models.DomainTransaction
 import com.explwa.jexchangeanalytics.domain.models.DomainTransactionPage
-import com.explwa.jexchangeanalytics.presenter.model.UITokenItem
 import com.explwa.jexchangeanalytics.presenter.model.UITxItem
 
 fun DomainTransaction.toUIItem(): UITxItem =
@@ -22,44 +20,6 @@ fun DomainTransaction.toUIItem(): UITxItem =
         price = price,
         operations = operations
     )
-
-fun DomainToken.toUIItem(): UITokenItem =
-    UITokenItem.Cell(
-        identifier,
-        name,
-        owner,
-        decimals,
-        isPaused,
-        transactions,
-        accounts,
-        canUpgrade,
-        canMint,
-        canBurn,
-        canChangeOwner,
-        canPause,
-        canFreeze,
-        canWipe,
-        price,
-        marketCap,
-        supply,
-        circulatingSupply,
-        balance,
-        valueUsd,
-        website,
-        description,
-        ledgerSignature,
-        status,
-        extraTokens,
-        pngUrl,
-        svgUrl,
-        email,
-        blog,
-        twitter,
-        whitepaper,
-        coinmarketcap,
-        coingecko
-    )
-
 
 fun List<DomainTransactionPage>.toUIItem(): List<UITxItem> =
     ArrayList<UITxItem>().also {
