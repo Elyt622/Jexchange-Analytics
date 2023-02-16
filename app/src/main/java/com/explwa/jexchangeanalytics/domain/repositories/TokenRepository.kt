@@ -5,6 +5,8 @@ import io.reactivex.rxjava3.core.Single
 
 interface TokenRepository {
 
-    fun getTokenDetails(idToken: String) : Single<DomainToken>
+    fun getTokenDetails(
+        idToken: String
+    ): Single<DomainToken>
 
 }

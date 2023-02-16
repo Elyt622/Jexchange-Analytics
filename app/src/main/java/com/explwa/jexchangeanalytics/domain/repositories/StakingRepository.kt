@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface StakingRepository {
 
-    fun getStakingRewards() : Single<List<DomainToken>>
+    fun getStakingRewards()
+    : Single<List<DomainToken>>
 
 }
