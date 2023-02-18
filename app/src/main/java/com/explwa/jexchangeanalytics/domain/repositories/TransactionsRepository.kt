@@ -33,6 +33,6 @@ interface TransactionsRepository {
     : Single<DomainTransaction>
 
     fun getTokenPrice(idToken: String)
-    : Single<Double>?
+    : Single<Double>
 
 }
