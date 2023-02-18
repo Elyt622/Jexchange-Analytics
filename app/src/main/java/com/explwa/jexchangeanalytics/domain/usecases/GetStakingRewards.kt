@@ -8,10 +8,11 @@ import javax.inject.Inject
 class GetStakingRewards @Inject constructor(
     private val repository: StakingRepository
 ){
-    fun getStakingRewards() : Single<List<DomainToken>> {
-        return repository.getStakingRewards()
+    fun getStakingRewards()
+    : Single<List<DomainToken>> =
+        repository.getStakingRewards()
             .toObservable()
             .flatMapIterable { it }
             .toList()
-    }
+
 }

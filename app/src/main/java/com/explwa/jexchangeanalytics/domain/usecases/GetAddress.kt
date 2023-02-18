@@ -17,9 +17,7 @@ class GetAddress @Inject constructor(
         usernameOrAddress : String
     ) : Single<DomainAccount> =
         repository.loadData(usernameOrAddress)
-            .map {
-                it
-            }
+            .map { it }
 
     fun getAccount()
     : Observable<DomainAccount> =
@@ -27,7 +25,8 @@ class GetAddress @Inject constructor(
 
     fun insertAccountInDB(
         account: DomainAccount
-    ) : Completable = repository.insertAccount(account.toEntity())
+    ) : Completable =
+        repository.insertAccount(account.toEntity())
 
 }
 
