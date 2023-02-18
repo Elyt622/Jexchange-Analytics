@@ -57,7 +57,6 @@ data class TokenResponse (
             assets?.description,
             assets?.ledgerSignature,
             assets?.status,
-            assets?.extraTokens!!,
             assets?.pngUrl,
             assets?.svgUrl,
             assets?.socialResponse?.email,
