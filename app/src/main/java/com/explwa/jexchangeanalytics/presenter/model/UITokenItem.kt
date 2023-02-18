@@ -26,7 +26,6 @@ sealed class UITokenItem {
         var description       : String?  = null,
         var ledgerSignature   : String?  = null,
         var status            : String?  = null,
-        var extraTokens       : ArrayList<String> = arrayListOf(),
         var pngUrl            : String? = null,
         var svgUrl            : String? = null,
         var email             : String? = null,

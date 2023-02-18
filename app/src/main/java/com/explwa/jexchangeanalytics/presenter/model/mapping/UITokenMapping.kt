@@ -30,7 +30,6 @@ fun DomainToken.toUIItem(): UITokenItem =
         description = description,
         ledgerSignature = ledgerSignature,
         status = status,
-        extraTokens = extraTokens,
         pngUrl = pngUrl,
         svgUrl = svgUrl,
         email = email,
