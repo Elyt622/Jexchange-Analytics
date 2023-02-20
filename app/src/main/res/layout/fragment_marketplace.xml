@@ -11,98 +11,59 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/top_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:elevation="1dp"
-            android:padding="5dp"
-            android:layoutDirection="rtl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/app_name"
-                android:layout_marginEnd="10dp" />
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/image_view_logo"
-                android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_jex_logo"
-                android:contentDescription="@string/jex_logo" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/top_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="60dp"
+                android:elevation="1dp"
+                android:padding="5dp"
+                android:layoutDirection="rtl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="85dp"
-                    android:text="@string/trade_your_token_on"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/app_name"
+                    android:layout_marginEnd="10dp" />
 
-                <TextView
-                    android:id="@+id/textview_link_exchange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/app_jexchange_io"
-                    android:textColor="@color/greenJex"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                <ImageView
+                    android:id="@+id/image_view_logo"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="20dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_jex_logo"
+                    android:contentDescription="@string/jex_logo" />
 
-                <ProgressBar
-                    android:id="@+id/progress_circular"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="220dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/recycler_view_tokens"
-                    app:layout_constraintEnd_toEndOf="@+id/recycler_view_tokens"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textview_link_exchange" />
+            </com.google.android.material.appbar.MaterialToolbar>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_tokens"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:nestedScrollingEnabled="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textview_link_exchange" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_tokens"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_toolbar" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>
