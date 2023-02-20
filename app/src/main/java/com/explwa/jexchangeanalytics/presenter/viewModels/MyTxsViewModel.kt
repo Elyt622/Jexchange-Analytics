@@ -11,7 +11,6 @@ import com.explwa.jexchangeanalytics.presenter.util.MySchedulers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,11 +68,5 @@ class MyTxsViewModel @Inject constructor(
             .onErrorResumeNext {
                 Observable.just(ShowError("Error"))
             }
-
-    fun getAllTokensOnJexchange()
-    : Single<MutableList<String>> =
-        getAlltokens.getAllTokensName()
-            .subscribeOn(mySchedulers.io)
-            .observeOn(mySchedulers.main)
 
 }
