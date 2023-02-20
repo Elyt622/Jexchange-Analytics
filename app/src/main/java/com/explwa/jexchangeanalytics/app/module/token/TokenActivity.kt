@@ -25,6 +25,8 @@ class TokenActivity : AppCompatActivity() {
 
     val viewModel : TokenViewModel by viewModels()
 
+    var showLinkSection = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTokenBinding.inflate(layoutInflater)
@@ -86,6 +88,7 @@ class TokenActivity : AppCompatActivity() {
             hideNullSection(linearLayoutWhitepaper, token.whitepaper, textviewWhitepaper)
             hideNullSection(linearLayoutTwitter, token.twitter, textviewTwitter)
             hideNullSection(linearLayoutEmail, token.email, textviewEmail)
+            if (showLinkSection == 7) materialCardViewLinks.isGone = true
 
             // Static Textview
             textviewIdentifierInStats.text = Utils.getSortNameToken(token.identifier.toString())
@@ -102,16 +105,18 @@ class TokenActivity : AppCompatActivity() {
         }
     }
 
-    fun hideNullSection(
+    private fun hideNullSection(
         linearLayout: LinearLayout,
         string: String?,
         textView: TextView
-    ) {
-        if(string == null)
+    ) : Any =
+        if(string == null) {
             linearLayout.isGone = true
-        else
+            showLinkSection++
+        } else {
             textView.text = string.toString()
-    }
+            showLinkSection = 0
+        }
 
     private fun configToolbar() {
         setSupportActionBar(binding.topToolbar)
