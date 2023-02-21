@@ -25,7 +25,7 @@ class TokenActivity : AppCompatActivity() {
 
     val viewModel : TokenViewModel by viewModels()
 
-    var showLinkSection = 0
+    private var linkSectionVisible = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +111,7 @@ class TokenActivity : AppCompatActivity() {
             hideEmptySection(linearLayoutWhitepaper, token.whitepaper, textviewWhitepaper)
             hideEmptySection(linearLayoutTwitter, token.twitter, textviewTwitter)
             hideEmptySection(linearLayoutEmail, token.email, textviewEmail)
-            if (showLinkSection == 7) materialCardViewLinks.isGone = true
+            if (linkSectionVisible == NB_LINKS_SECTION) materialCardViewLinks.isGone = true
 
             // Static Textview
             textviewIdentifierInStats.text = Utils.getSortNameToken(token.identifier.toString())
@@ -135,10 +135,10 @@ class TokenActivity : AppCompatActivity() {
     ) : Any =
         if(tokenProperty == null) {
             linearLayout.isGone = true
-            showLinkSection++
+            linkSectionVisible++
         } else {
             textView.text = tokenProperty.toString()
-            showLinkSection = 0
+            linkSectionVisible = 0
         }
 
     private fun configToolbar() {
@@ -150,5 +150,9 @@ class TokenActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    companion object {
+        const val NB_LINKS_SECTION = 7
     }
 }
