@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".app.module.token.TokenActivity"
+            android:name=".app.module.token.activity.TokenActivity"
             android:exported="false" />
         <activity
             android:name=".app.module.login.activity.LoginActivity"
