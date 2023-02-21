@@ -27,8 +27,9 @@ class TokenRepositoryImpl @Inject constructor(
                 }
             }
 
-    private fun getTokenPrice(idToken: String)
-            : Single<Double> =
+    private fun getTokenPrice(
+        idToken: String
+    ) : Single<Double> =
         jexchangeService.getPriceForToken(idToken)
             .map { it.rate!! }
 }

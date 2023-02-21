@@ -19,15 +19,17 @@ class AccountRepositoryImpl @Inject constructor(
     override var account : Single<DomainAccount>? = null
 
     // Get account with username
-    override fun getAccountWithUsername(username: String)
-            : Single<DomainAccount> =
+    override fun getAccountWithUsername(
+        username: String
+    ) : Single<DomainAccount> =
         elrondApi.getAccountWithUsername(username)
             .map { it.toDomain() }
             .doOnError { Log.d("DEBUG1", it.message.toString()) }
 
     // Get account with address
-    override fun getAccountWithAddress(address: String)
-            : Single<DomainAccount> =
+    override fun getAccountWithAddress(
+        address: String
+    ) : Single<DomainAccount> =
         elrondApi.getAccountWithAddress(address)
             .map { it.toDomain() }
             .doOnError { Log.d("DEBUG2", it.message.toString()) }
@@ -40,20 +42,22 @@ class AccountRepositoryImpl @Inject constructor(
                 this.account = Single.just(it)
                 it
             }
-            .onErrorResumeNext { getAccountWithAddress(usernameOrAddress)
-                .map {
-                    this.account = Single.just(it)
-                    it
-                }
+            .onErrorResumeNext {
+                getAccountWithAddress(usernameOrAddress)
+                    .map {
+                        this.account = Single.just(it)
+                        it
+                    }
             }
 
     override fun loadData()
     : Observable<DomainAccount> =
-        accountDao.getAccount().map { it.last().toDomain() }
+        accountDao.getAccount()
+            .map { it.last().toDomain() }
 
     override fun insertAccount(
         account: AccountEntity
-    ): Completable =
+    ) : Completable =
         accountDao.insertAccount(account)
 
 

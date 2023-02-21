@@ -21,7 +21,7 @@ class TransactionsRepositoryImpl @Inject constructor(
         token: String,
         size: Int,
         from: Int
-    ): Single<DomainTransactionPage> =
+    ) : Single<DomainTransactionPage> =
         elrondApi.getMyTokenTransfers(
             address,
             token,
@@ -43,15 +43,18 @@ class TransactionsRepositoryImpl @Inject constructor(
     override fun getMyTokenTransfersCount(
         address: String,
         token: String
-    ): Single<Int> = elrondApi.getMyTokenTransfersCount(address, token)
+    ) : Single<Int> =
+        elrondApi.getMyTokenTransfersCount(address, token)
 
-    override fun getTransactionWithHash(txHash: String)
-    : Single<DomainTransaction> =
+    override fun getTransactionWithHash(
+        txHash: String
+    ) : Single<DomainTransaction> =
         elrondApi.getTransactionWithHash(txHash)
             .map { it.toDomain() }
 
-    override fun getTokenPrice(idToken: String)
-    : Single<Double> =
+    override fun getTokenPrice(
+        idToken: String
+    ) : Single<Double> =
         jexchangeService.getPriceForToken(idToken)
             .map {
                 (if (it.rate == null) 0.0 else it.rate)!!
@@ -59,8 +62,10 @@ class TransactionsRepositoryImpl @Inject constructor(
 
 
     // Get all token used on Jexchange
-    override fun getAllTokensOnJexchange(size: Int, from: Int)
-    : Observable<DomainTokenPage> =
+    override fun getAllTokensOnJexchange(
+        size: Int,
+        from: Int
+    ) : Observable<DomainTokenPage> =
         elrondApi.getAllTokensOnJexchange(size, from)
             .concatMapIterable { it }
             .filter { it.identifier != "BUSD-40b57e" && it.identifier != "USDT-f8c08c"}

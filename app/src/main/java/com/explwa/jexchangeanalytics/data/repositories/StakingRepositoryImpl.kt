@@ -10,12 +10,12 @@ class StakingRepositoryImpl @Inject constructor(
     private val elrondApi: ElrondApi
 ) : StakingRepository {
 
-    override fun getStakingRewards(): Single<List<DomainToken>> {
-        return elrondApi.getStakingRewards()
+    override fun getStakingRewards()
+    : Single<List<DomainToken>> =
+        elrondApi.getStakingRewards()
             .toObservable()
             .flatMapIterable { it }
             .map { it.toDomain() }
             .toList()
-    }
 
 }
