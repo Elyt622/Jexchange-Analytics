@@ -76,14 +76,12 @@ class MyTxsFragment : BaseFragment() {
             when (state) {
                 is MyTxsViewModel.ShowLoading -> {
                     progressCircular.isGone = state.progressBarIsGone
-                    materialCardViewAutocomplete.isGone = true
-                    rvMyTransactions.isGone = true
+                    rvTransactions.isGone = true
                 }
                 is MyTxsViewModel.ShowTxs -> {
                     adapter.submitList(state.myTxs)
                     progressCircular.isGone = state.progressBarIsGone
-                    rvMyTransactions.isGone = false
-                    materialCardViewAutocomplete.isGone = false
+                    rvTransactions.isGone = false
                 }
                 is MyTxsViewModel.ShowError -> {
                     Toast.makeText(
@@ -98,8 +96,8 @@ class MyTxsFragment : BaseFragment() {
 
     private fun configRecyclerView() {
         with(binding) {
-            rvMyTransactions.layoutManager = LinearLayoutManager(requireContext())
-            rvMyTransactions.adapter = adapter
+            rvTransactions.layoutManager = LinearLayoutManager(requireContext())
+            rvTransactions.adapter = adapter
         }
     }
 }
