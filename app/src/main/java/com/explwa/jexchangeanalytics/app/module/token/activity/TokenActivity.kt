@@ -1,4 +1,4 @@
-package com.explwa.jexchangeanalytics.app.module.token
+package com.explwa.jexchangeanalytics.app.module.token.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -7,19 +7,20 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import com.bumptech.glide.Glide
 import com.explwa.jexchangeanalytics.app.module.token.utils.Utils
+import com.explwa.jexchangeanalytics.app.utils.BaseActivity
 import com.explwa.jexchangeanalytics.databinding.ActivityTokenBinding
 import com.explwa.jexchangeanalytics.presenter.model.UITokenItem
 import com.explwa.jexchangeanalytics.presenter.viewModels.TokenViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 
 @AndroidEntryPoint
-class TokenActivity : AppCompatActivity() {
+class TokenActivity : BaseActivity() {
 
     lateinit var binding : ActivityTokenBinding
 
@@ -41,7 +42,7 @@ class TokenActivity : AppCompatActivity() {
             viewModel.getViewState(id)
                 .subscribeBy { state ->
                     updateUi(state)
-                }
+                }.addTo(disposable)
         }
     }
 
