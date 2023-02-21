@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -12,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.explwa.jexchangeanalytics.app.module.token.utils.Utils
 import com.explwa.jexchangeanalytics.databinding.ActivityTokenBinding
 import com.explwa.jexchangeanalytics.presenter.model.UITokenItem
-import com.explwa.jexchangeanalytics.presenter.model.mapping.toUIItem
 import com.explwa.jexchangeanalytics.presenter.viewModels.TokenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -32,14 +32,37 @@ class TokenActivity : AppCompatActivity() {
         binding = ActivityTokenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        updateUi(TokenViewModel.ShowLoading())
         configToolbar()
 
         val idToken = intent.getStringExtra("IDTOKEN")
 
         idToken?.let { id ->
-            viewModel.getTokenDetails(id)
-                .map { token -> token.toUIItem() as UITokenItem.Cell }
-                .subscribeBy { token -> bind(token) }
+            viewModel.getViewState(id)
+                .subscribeBy { state ->
+                    updateUi(state)
+                }
+        }
+    }
+
+    private fun updateUi(state: TokenViewModel.ViewState) {
+        when(state) {
+            is TokenViewModel.ShowToken -> {
+                bind(state.token)
+                binding.constraintLayoutToken.isGone = !state.progressBarGone
+                binding.progressBar.isGone = state.progressBarGone
+            }
+            is TokenViewModel.ShowLoading -> {
+                binding.constraintLayoutToken.isGone = !state.progressBarGone
+                binding.progressBar.isGone = state.progressBarGone
+            }
+            is TokenViewModel.ShowError -> {
+                Toast.makeText(
+                    this,
+                    state.errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -81,13 +104,13 @@ class TokenActivity : AppCompatActivity() {
             textviewTokenIdentifier.text = token.identifier
 
             // Token Links
-            hideNullSection(linearLayoutBlog, token.blog, textviewBlog)
-            hideNullSection(linearLayoutWebsite, token.website, textviewWebsite)
-            hideNullSection(linearLayoutCoingecko, token.coingecko, textviewCoingecko)
-            hideNullSection(linearLayoutCoinmarketcap, token.coinmarketcap, textviewCoinmarketcap)
-            hideNullSection(linearLayoutWhitepaper, token.whitepaper, textviewWhitepaper)
-            hideNullSection(linearLayoutTwitter, token.twitter, textviewTwitter)
-            hideNullSection(linearLayoutEmail, token.email, textviewEmail)
+            hideEmptySection(linearLayoutBlog, token.blog, textviewBlog)
+            hideEmptySection(linearLayoutWebsite, token.website, textviewWebsite)
+            hideEmptySection(linearLayoutCoingecko, token.coingecko, textviewCoingecko)
+            hideEmptySection(linearLayoutCoinmarketcap, token.coinmarketcap, textviewCoinmarketcap)
+            hideEmptySection(linearLayoutWhitepaper, token.whitepaper, textviewWhitepaper)
+            hideEmptySection(linearLayoutTwitter, token.twitter, textviewTwitter)
+            hideEmptySection(linearLayoutEmail, token.email, textviewEmail)
             if (showLinkSection == 7) materialCardViewLinks.isGone = true
 
             // Static Textview
@@ -105,16 +128,16 @@ class TokenActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideNullSection(
+    private fun hideEmptySection(
         linearLayout: LinearLayout,
-        string: String?,
+        tokenProperty: String?,
         textView: TextView
     ) : Any =
-        if(string == null) {
+        if(tokenProperty == null) {
             linearLayout.isGone = true
             showLinkSection++
         } else {
-            textView.text = string.toString()
+            textView.text = tokenProperty.toString()
             showLinkSection = 0
         }
 
