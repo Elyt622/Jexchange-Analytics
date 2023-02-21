@@ -5,15 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.explwa.jexchangeanalytics.app.module.main.activity.MainActivity
-import com.explwa.jexchangeanalytics.presenter.viewModels.LoginViewModel
+import com.explwa.jexchangeanalytics.app.utils.BaseActivity
 import com.explwa.jexchangeanalytics.databinding.ActivityLoginBinding
+import com.explwa.jexchangeanalytics.presenter.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private val viewModel : LoginViewModel by viewModels()
 
@@ -41,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                         onError = {
                             Log.d("DEBUG", it.message.toString())
                         }
-                    )
+                    ).addTo(disposable)
             }
         }
     }
