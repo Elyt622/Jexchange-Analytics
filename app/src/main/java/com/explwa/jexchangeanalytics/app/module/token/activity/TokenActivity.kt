@@ -106,7 +106,7 @@ class TokenActivity : BaseActivity() {
             // Token Links
             hideEmptySection(textviewBlog, token.blog)
             hideEmptySection(textviewWebsite, token.website)
-            hideEmptySection(textviewCoingecko, token.coingecko, )
+            hideEmptySection(textviewCoingecko, token.coingecko)
             hideEmptySection(textviewCoinmarketcap, token.coinmarketcap)
             hideEmptySection(textviewWhitepaper, token.whitepaper)
             hideEmptySection(textviewTwitter, token.twitter)
