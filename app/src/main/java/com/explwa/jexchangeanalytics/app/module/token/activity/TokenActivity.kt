@@ -3,7 +3,6 @@ package com.explwa.jexchangeanalytics.app.module.token.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -105,13 +104,13 @@ class TokenActivity : BaseActivity() {
             textviewTokenIdentifier.text = token.identifier
 
             // Token Links
-            hideEmptySection(linearLayoutBlog, token.blog, textviewBlog)
-            hideEmptySection(linearLayoutWebsite, token.website, textviewWebsite)
-            hideEmptySection(linearLayoutCoingecko, token.coingecko, textviewCoingecko)
-            hideEmptySection(linearLayoutCoinmarketcap, token.coinmarketcap, textviewCoinmarketcap)
-            hideEmptySection(linearLayoutWhitepaper, token.whitepaper, textviewWhitepaper)
-            hideEmptySection(linearLayoutTwitter, token.twitter, textviewTwitter)
-            hideEmptySection(linearLayoutEmail, token.email, textviewEmail)
+            hideEmptySection(textviewBlog, token.blog)
+            hideEmptySection(textviewWebsite, token.website)
+            hideEmptySection(textviewCoingecko, token.coingecko, )
+            hideEmptySection(textviewCoinmarketcap, token.coinmarketcap)
+            hideEmptySection(textviewWhitepaper, token.whitepaper)
+            hideEmptySection(textviewTwitter, token.twitter)
+            hideEmptySection(textviewEmail, token.email)
             if (linkSectionVisible == NB_LINKS_SECTION) materialCardViewLinks.isGone = true
 
             // Static Textview
@@ -130,12 +129,11 @@ class TokenActivity : BaseActivity() {
     }
 
     private fun hideEmptySection(
-        linearLayout: LinearLayout,
-        tokenProperty: String?,
-        textView: TextView
+        textView: TextView,
+        tokenProperty: String?
     ) : Any =
         if(tokenProperty == null) {
-            linearLayout.isGone = true
+            textView.isGone = true
             linkSectionVisible++
         } else {
             textView.text = tokenProperty.toString()
