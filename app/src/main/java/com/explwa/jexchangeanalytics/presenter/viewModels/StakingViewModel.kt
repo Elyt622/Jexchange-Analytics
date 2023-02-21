@@ -15,14 +15,15 @@ class StakingViewModel @Inject constructor(
     private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
-    fun getStakingRewards() : Single<List<UITokenItem>> {
-        return rewardUseCase.getStakingRewards()
+    fun getStakingRewards()
+    : Single<List<UITokenItem>> =
+        rewardUseCase.getStakingRewards()
             .toObservable()
             .flatMapIterable { it }
             .map { it.toUIItem() }
             .toList()
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
-    }
+
 
 }

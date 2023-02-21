@@ -15,7 +15,9 @@ class LoginViewModel @Inject constructor(
     private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
-    fun setAccount (usernameOrAddress: String) : Single<DomainAccount> =
+    fun setAccount (
+        usernameOrAddress: String
+    ): Single<DomainAccount> =
         usecase.execute(usernameOrAddress)
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
