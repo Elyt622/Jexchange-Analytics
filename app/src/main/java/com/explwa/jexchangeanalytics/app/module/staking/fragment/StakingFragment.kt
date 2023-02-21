@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.explwa.jexchangeanalytics.app.module.staking.adapter.StakingListAdapter
-import com.explwa.jexchangeanalytics.presenter.viewModels.StakingViewModel
+import com.explwa.jexchangeanalytics.app.utils.BaseFragment
 import com.explwa.jexchangeanalytics.databinding.FragmentStakingBinding
+import com.explwa.jexchangeanalytics.presenter.viewModels.StakingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 
 @AndroidEntryPoint
-class StakingFragment : Fragment() {
+class StakingFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = StakingFragment()
@@ -40,7 +41,7 @@ class StakingFragment : Fragment() {
             viewModel.getStakingRewards()
                 .subscribeBy {
                     recyclerViewStakingRewards.adapter = StakingListAdapter(it)
-                }
+                }.addTo(disposable)
         }
     }
 
