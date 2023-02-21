@@ -18,4 +18,23 @@
     <string name="dollar_sign">$</string>
     <string name="background_logo">Background logo</string>
     <string name="token">Token</string>
+    <string name="token_logo">Token Logo</string>
+    <string name="chart">Chart</string>
+    <string name="statistics">Statistics</string>
+    <string name="account_holders">Account holders</string>
+    <string name="transactions">Transactions</string>
+    <string name="marketcap">Marketcap</string>
+    <string name="supply">Supply</string>
+    <string name="circulating_supply">Circulating Supply</string>
+    <string name="properties">Properties</string>
+    <string name="owner">Owner</string>
+    <string name="is_paused">is Paused</string>
+    <string name="can_upgrade">can Upgrade</string>
+    <string name="can_mint">can Mint</string>
+    <string name="can_burn">can Burn</string>
+    <string name="can_change_owner">can Change Owner</string>
+    <string name="can_pause">can Pause</string>
+    <string name="can_freeze">can Freeze</string>
+    <string name="can_wipe">can Wipe</string>
+    <string name="links">Links</string>
 </resources>
