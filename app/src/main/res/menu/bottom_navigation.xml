@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/portfolio"
-        android:title="@string/portfolio"
-        android:icon="@drawable/ic_query_stats_24px"/>
-
-    <item
         android:id="@+id/marketplace"
         android:title="@string/marketplace"
         android:icon="@drawable/ic_monitoring_24px"/>
+
+    <item
+        android:id="@+id/portfolio"
+        android:title="@string/portfolio"
+        android:icon="@drawable/ic_query_stats_24px"/>
 
     <item
         android:id="@+id/staking"

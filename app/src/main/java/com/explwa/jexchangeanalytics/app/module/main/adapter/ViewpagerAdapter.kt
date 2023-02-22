@@ -17,8 +17,8 @@ class ViewpagerAdapter(fa: FragmentActivity)
 
     override fun createFragment(position: Int): Fragment {
         when (position) {
-            0 -> return PortfolioFragment.newInstance()
-            1 -> return MarketplaceFragment.newInstance()
+            0 -> return MarketplaceFragment.newInstance()
+            1 -> return PortfolioFragment.newInstance()
             2 -> return StakingFragment.newInstance()
         }
         return MarketplaceFragment.newInstance()

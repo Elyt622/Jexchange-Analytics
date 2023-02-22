@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.portfolio -> viewpager.currentItem = 0
-                    R.id.marketplace -> viewpager.currentItem = 1
+                    R.id.marketplace -> viewpager.currentItem = 0
+                    R.id.portfolio -> viewpager.currentItem = 1
                     R.id.staking -> viewpager.currentItem = 2
                 }
                 true
