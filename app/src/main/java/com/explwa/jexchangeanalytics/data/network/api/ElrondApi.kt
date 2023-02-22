@@ -22,9 +22,6 @@ interface ElrondApi {
         @Path("address") address: String
     ) : Single<UsernameResponse>
 
-    @GET("/accounts/erd1qqqqqqqqqqqqqpgqwkqnf30j7hj4r797kahr0p5t5nsksc8a73eqd732jd/tokens?size=50")
-    fun getStakingRewards() : Single<List<TokenResponse>>
-
     @GET("/accounts/{address}/transfers?status=success&order=desc")
     fun getMyTokenTransfers(
         @Path("address") address: String,
@@ -39,11 +36,14 @@ interface ElrondApi {
         @Query("token") token: String
     ) : Single<Int>
 
-    @GET("/accounts/erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2/tokens/count")
-    fun getTokensCountOnJexchange() : Single<Int>
+    @GET("/accounts/{address}/tokens/count")
+    fun getTokensCount(
+        @Path("address") address: String
+    ) : Single<Int>
 
-    @GET("/accounts/erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2/tokens")
-    fun getAllTokensOnJexchange(
+    @GET("/accounts/{address}/tokens")
+    fun getAllTokens(
+        @Path("address") address: String,
         @Query("size") size: Int,
         @Query("from") from: Int
     ) : Observable<List<TokenResponse>>

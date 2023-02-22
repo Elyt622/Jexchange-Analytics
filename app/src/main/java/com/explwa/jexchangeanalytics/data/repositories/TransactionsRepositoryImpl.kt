@@ -66,7 +66,7 @@ class TransactionsRepositoryImpl @Inject constructor(
         size: Int,
         from: Int
     ) : Observable<DomainTokenPage> =
-        elrondApi.getAllTokensOnJexchange(size, from)
+        elrondApi.getAllTokens(JEXCHANGE_SWAP_ACCOUNT, size, from)
             .concatMapIterable { it }
             .filter { it.identifier != "BUSD-40b57e" && it.identifier != "USDT-f8c08c"}
             .map { token ->
@@ -94,5 +94,9 @@ class TransactionsRepositoryImpl @Inject constructor(
             }
 
     override fun getTokensCountOnJexchange()
-    : Single<Int> = elrondApi.getTokensCountOnJexchange()
+    : Single<Int> = elrondApi.getTokensCount(JEXCHANGE_SWAP_ACCOUNT)
+
+    companion object {
+        val JEXCHANGE_SWAP_ACCOUNT = "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2"
+    }
  }

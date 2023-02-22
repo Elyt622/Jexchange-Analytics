@@ -12,10 +12,17 @@ class StakingRepositoryImpl @Inject constructor(
 
     override fun getStakingRewards()
     : Single<List<DomainToken>> =
-        elrondApi.getStakingRewards()
-            .toObservable()
+        elrondApi.getAllTokens(
+            STAKING_ACCOUNT,
+            elrondApi.getTokensCount(STAKING_ACCOUNT).blockingGet(),
+            0
+        )
             .flatMapIterable { it }
             .map { it.toDomain() }
             .toList()
+
+    companion object {
+        const val STAKING_ACCOUNT = "erd1qqqqqqqqqqqqqpgqwkqnf30j7hj4r797kahr0p5t5nsksc8a73eqd732jd"
+    }
 
 }
