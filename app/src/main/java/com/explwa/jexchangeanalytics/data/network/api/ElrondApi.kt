@@ -48,6 +48,12 @@ interface ElrondApi {
         @Query("from") from: Int
     ) : Observable<List<TokenResponse>>
 
+    @GET("/accounts/{address}/tokens")
+    fun getToken(
+        @Path("address") address: String,
+        @Query("identifier") identifier: String
+    ) : Single<List<TokenResponse>>
+
     @GET("/transactions/{txHash}")
     fun getTransactionWithHash(
         @Path("txHash") txHash: String
