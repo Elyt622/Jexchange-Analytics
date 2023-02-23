@@ -98,12 +98,11 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textview_price_token"
                 app:layout_constraintStart_toEndOf="@+id/textview_price_token" />
 
-            <ImageView
-                android:id="@+id/imageView_trading"
+            <com.tradingview.lightweightcharts.view.ChartsView
+                android:id="@+id/charts_view"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginTop="24dp"
-                android:background="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_price_token"
                 android:contentDescription="@string/chart" />
@@ -116,7 +115,7 @@
                 app:cardCornerRadius="30dp"
                 app:cardElevation="2dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_trading">
+                app:layout_constraintTop_toBottomOf="@+id/charts_view">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

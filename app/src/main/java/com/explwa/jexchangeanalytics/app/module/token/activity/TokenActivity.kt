@@ -13,6 +13,14 @@ import com.explwa.jexchangeanalytics.app.utils.BaseActivity
 import com.explwa.jexchangeanalytics.databinding.ActivityTokenBinding
 import com.explwa.jexchangeanalytics.presenter.model.UITokenItem
 import com.explwa.jexchangeanalytics.presenter.viewModels.TokenViewModel
+import com.tradingview.lightweightcharts.api.interfaces.SeriesApi
+import com.tradingview.lightweightcharts.api.options.models.localizationOptions
+import com.tradingview.lightweightcharts.api.series.models.HistogramData
+import com.tradingview.lightweightcharts.api.series.models.Time
+import com.tradingview.lightweightcharts.api.series.models.WhitespaceData
+import com.tradingview.lightweightcharts.runtime.plugins.DateTimeFormat
+import com.tradingview.lightweightcharts.runtime.plugins.PriceFormatter
+import com.tradingview.lightweightcharts.runtime.plugins.TimeFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -32,6 +40,43 @@ class TokenActivity : BaseActivity() {
         binding = ActivityTokenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        binding.chartsView.api.applyOptions {
+            localization = localizationOptions {
+                locale = "fr-FR"
+                priceFormatter = PriceFormatter(template = "{price:#2:#3}$")
+                timeFormatter = TimeFormatter(
+                    locale = "fr-FR",
+                    dateTimeFormat = DateTimeFormat.DATE_TIME
+                )
+            }
+        }
+
+        val data = listOf(
+            HistogramData(Time.BusinessDay(2019, 6, 11), 40.01f),
+            HistogramData(Time.BusinessDay(2019, 6, 12), 52.38f),
+            HistogramData(Time.BusinessDay(2019, 6, 13), 36.30f),
+            HistogramData(Time.BusinessDay(2019, 6, 14), 34.48f),
+            WhitespaceData(Time.BusinessDay(2019, 6, 15)),
+            WhitespaceData(Time.BusinessDay(2019, 6, 16)),
+            HistogramData(Time.BusinessDay(2019, 6, 17), 41.50f),
+            HistogramData(Time.BusinessDay(2019, 6, 18), 34.82f)
+        )
+
+        lateinit var histogramSeries: SeriesApi
+        binding.chartsView.api.addHistogramSeries(
+            onSeriesCreated = { series ->
+                histogramSeries = series
+                histogramSeries.setData(data)
+            }
+        )
+
+
+
+
+
+
+
         updateUi(TokenViewModel.ShowLoading())
         configToolbar()
 
@@ -43,6 +88,8 @@ class TokenActivity : BaseActivity() {
                     updateUi(state)
                 }.addTo(disposable)
         }
+
+
     }
 
     private fun updateUi(state: TokenViewModel.ViewState) {
