@@ -1,6 +1,5 @@
 package com.explwa.jexchangeanalytics.app.module.mytxs.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import com.explwa.jexchangeanalytics.databinding.FragmentMyTxsBinding
 import com.explwa.jexchangeanalytics.presenter.viewModels.MyTxsViewModel
 import com.jakewharton.rxbinding4.swiperefreshlayout.refreshes
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 
@@ -40,7 +40,6 @@ class MyTxsFragment : BaseFragment() {
         return binding.root
     }
 
-    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,7 +56,6 @@ class MyTxsFragment : BaseFragment() {
                 ).subscribeBy(
                     onNext = { txsList ->
                         updateUi(MyTxsViewModel.ShowTxs(txsList.myTxs))
-                        binding.swipe.isRefreshing = false
                     },
                     onError = {
                         updateUi(
@@ -66,8 +64,8 @@ class MyTxsFragment : BaseFragment() {
                             )
                         )
                     }
-                )
-            }
+                ).addTo(disposable)
+            }.addTo(disposable)
     }
 
 
@@ -82,6 +80,7 @@ class MyTxsFragment : BaseFragment() {
                     adapter.submitList(state.myTxs)
                     progressCircular.isGone = state.progressBarIsGone
                     rvTransactions.isGone = false
+                    swipe.isRefreshing = false
                 }
                 is MyTxsViewModel.ShowError -> {
                     Toast.makeText(
