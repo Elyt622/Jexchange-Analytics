@@ -37,4 +37,6 @@
     <string name="can_freeze">can Freeze</string>
     <string name="can_wipe">can Wipe</string>
     <string name="links">Links</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="jex_staking_balance">JEX Staking Balance</string>
 </resources>
