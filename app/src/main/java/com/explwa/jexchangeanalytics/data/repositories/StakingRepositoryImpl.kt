@@ -15,7 +15,8 @@ class StakingRepositoryImpl @Inject constructor(
         elrondApi.getAllTokens(
             STAKING_ACCOUNT,
             elrondApi.getTokensCount(STAKING_ACCOUNT).blockingGet(),
-            0
+            0,
+            true
         )
             .flatMapIterable { it }
             .map { it.toDomain() }
