@@ -9,8 +9,6 @@ import io.reactivex.rxjava3.core.Single
 
 interface AccountRepository {
 
-    var account : Single<DomainAccount>?
-
     fun getAccountWithUsername(
         username: String
     ) : Single<DomainAccount>
