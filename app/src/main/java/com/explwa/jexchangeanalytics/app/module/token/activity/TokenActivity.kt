@@ -71,12 +71,6 @@ class TokenActivity : BaseActivity() {
             }
         )
 
-
-
-
-
-
-
         updateUi(TokenViewModel.ShowLoading())
         configToolbar()
 
