@@ -45,7 +45,8 @@ interface ElrondApi {
     fun getAllTokens(
         @Path("address") address: String,
         @Query("size") size: Int,
-        @Query("from") from: Int
+        @Query("from") from: Int,
+        @Query("includeMetaESDT") includeMetaESDT: Boolean
     ) : Observable<List<TokenResponse>>
 
     @GET("/accounts/{address}/tokens")
