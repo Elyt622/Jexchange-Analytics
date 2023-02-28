@@ -22,9 +22,11 @@ class LoginViewModel @Inject constructor(
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
 
-    fun insertAccountInDB(account: DomainAccount)
-    : Completable = usecase.insertAccountInDB(account)
-        .subscribeOn(mySchedulers.io)
-        .observeOn(mySchedulers.main)
+    fun insertAccountInDB(
+        account: DomainAccount
+    ) : Completable =
+        usecase.insertAccountInDB(account)
+            .subscribeOn(mySchedulers.io)
+            .observeOn(mySchedulers.main)
 
 }
