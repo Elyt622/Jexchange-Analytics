@@ -4,6 +4,7 @@ import android.util.Log
 import com.explwa.jexchangeanalytics.data.database.dao.AccountDao
 import com.explwa.jexchangeanalytics.data.entities.AccountEntity
 import com.explwa.jexchangeanalytics.data.network.api.ElrondApi
+import com.explwa.jexchangeanalytics.data.network.api.JexchangeService
 import com.explwa.jexchangeanalytics.domain.models.DomainAccount
 import com.explwa.jexchangeanalytics.domain.models.DomainToken
 import com.explwa.jexchangeanalytics.domain.repositories.AccountRepository
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
     private val elrondApi: ElrondApi,
-    private val accountDao: AccountDao
+    private val accountDao: AccountDao,
+    private val jexchangeService: JexchangeService
 ) : AccountRepository {
 
     // Get account with username
@@ -79,16 +81,11 @@ class AccountRepositoryImpl @Inject constructor(
                 Log.d("DEBUG", it.message.toString())
             }
 
-    override fun getTotalValue(
-        address: String
-    ) : Single<String> =
-        elrondApi.getAllTokens(
-            accountDao.getAccount().blockingFirst().last().address,
-            60,
-            0
-        )
-            .flatMapIterable { it }
-            .map { it.valueUsd.toString() }
-            .singleOrError()
+    override fun getTokenPrice(
+        idToken: String
+    ) : Single<Double> =
+        jexchangeService.getPriceForToken(idToken)
+            .map { if (it.rate == null) 0.0 else it.rate!! }
+            .onErrorReturn { 0.0 }
 
 }
