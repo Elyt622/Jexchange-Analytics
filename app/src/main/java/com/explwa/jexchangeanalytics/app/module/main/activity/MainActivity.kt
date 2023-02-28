@@ -18,11 +18,13 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    lateinit var currentAccount : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        currentAccount = intent.getStringExtra("ADDRESS").toString()
         configViewPager()
         configBottomNav()
     }
