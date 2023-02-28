@@ -17,8 +17,6 @@ class AccountRepositoryImpl @Inject constructor(
     private val accountDao: AccountDao
 ) : AccountRepository {
 
-    override var account : Single<DomainAccount>? = null
-
     // Get account with username
     override fun getAccountWithUsername(
         username: String
