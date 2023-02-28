@@ -9,9 +9,11 @@ class GetBalance @Inject constructor(
     private val accountRepository: AccountRepository
 ) {
 
-    fun getBalance(idToken: String)
-    : Single<List<DomainToken>> =
+    fun getBalance(
+        address: String,
+        idToken: String
+    ) : Single<List<DomainToken>> =
         accountRepository
-            .getBalance(idToken)
+            .getBalance(address, idToken)
 
 }
