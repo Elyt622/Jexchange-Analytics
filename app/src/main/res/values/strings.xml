@@ -38,5 +38,7 @@
     <string name="can_wipe">can Wipe</string>
     <string name="links">Links</string>
     <string name="total_balance">Total Balance</string>
-    <string name="jex_staking_balance">JEX Staking Balance</string>
+    <string name="jex_staking_balance">JEX Balance</string>
+    <string name="staking_jex">Staking JEX</string>
+    <string name="staking_multiversx">Staking MultiversX</string>
 </resources>
