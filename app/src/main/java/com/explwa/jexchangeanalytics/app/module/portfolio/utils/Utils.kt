@@ -9,24 +9,23 @@ object Utils {
     fun fromBigIntegerToBigDecimal(
         bigIntegerStr: String?,
         decimals: Int?
-    ) : String {
-
+    ): BigDecimal {
         val bigInteger = BigInteger(bigIntegerStr!!)
         return BigDecimal(
             bigInteger,
             decimals!!
         ).setScale(
-            0,
+            2,
             RoundingMode.UP
-        ).formatDecimalSeparator()
+        )
     }
 
     fun BigDecimal.formatDecimalSeparator()
-    : String =
-         toString()
-             .reversed()
-             .chunked(3)
-             .joinToString(",")
-             .reversed()
+            : String =
+        toString()
+            .reversed()
+            .chunked(3)
+            .joinToString(",")
+            .reversed()
 
 }
