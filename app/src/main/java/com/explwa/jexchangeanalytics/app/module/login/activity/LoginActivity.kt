@@ -1,6 +1,5 @@
 package com.explwa.jexchangeanalytics.app.module.login.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +19,6 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var binding : ActivityLoginBinding
 
-    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -37,6 +35,7 @@ class LoginActivity : BaseActivity() {
                                 this@LoginActivity,
                                 MainActivity::class.java
                             )
+                            intent.putExtra("ADDRESS", it.address)
                             startActivity(intent)
                         },
                         onError = {
