@@ -39,16 +39,8 @@ class AccountRepositoryImpl @Inject constructor(
         usernameOrAddress: String
     ) : Single<DomainAccount> =
         getAccountWithUsername(usernameOrAddress)
-            .map {
-                this.account = Single.just(it)
-                it
-            }
             .onErrorResumeNext {
                 getAccountWithAddress(usernameOrAddress)
-                    .map {
-                        this.account = Single.just(it)
-                        it
-                    }
             }
 
     override fun loadData()
@@ -61,23 +53,25 @@ class AccountRepositoryImpl @Inject constructor(
     ) : Completable =
         accountDao.insertAccount(account)
 
-    override fun getAllTokens() : Observable<List<DomainToken>>? =
-        account?.blockingGet()?.address?.let {
-            elrondApi.getAllTokens(
-                it,
-                elrondApi.getTokensCount(account!!.blockingGet().address!!).blockingGet(),
-                0
+    override fun getAllTokens(
+        address: String
+    ) : Observable<List<DomainToken>> =
+        elrondApi.getAllTokens(
+                address,
+                elrondApi.getTokensCount(address).blockingGet(),
+                0,
+                true
             ).flatMapIterable { it }
                 .map { it.toDomain() }
                 .toList()
                 .toObservable()
-        }
 
     override fun getBalance(
+        address: String,
         idToken: String
     ) : Single<List<DomainToken>> =
         elrondApi.getToken(
-            accountDao.getAccount().blockingFirst().last().address,
+            address,
             idToken
         ).toObservable()
             .flatMapIterable { it }

@@ -28,15 +28,17 @@ interface AccountRepository {
         account: AccountEntity
     ) : Completable
 
-    fun getAllTokens()
-    : Observable<List<DomainToken>>?
+    fun getAllTokens(
+        address: String
+    ) : Observable<List<DomainToken>>
 
     fun getBalance(
+        address: String,
         idToken: String
     ) : Single<List<DomainToken>>
 
-    fun getTotalValue(
-        address: String
-    ) : Single<String>
+    fun getTokenPrice(
+        idToken: String
+    ) : Single<Double>
 
 }
