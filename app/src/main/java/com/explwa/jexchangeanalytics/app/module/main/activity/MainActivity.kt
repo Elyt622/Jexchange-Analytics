@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun configViewPager() {
         with(binding) {
-            binding.viewpager.adapter = ViewpagerAdapter(this@MainActivity)
+            viewpager.adapter = ViewpagerAdapter(this@MainActivity)
+            viewpager.offscreenPageLimit = 2
             viewpager.isUserInputEnabled = false
 
             viewpager.registerOnPageChangeCallback(
