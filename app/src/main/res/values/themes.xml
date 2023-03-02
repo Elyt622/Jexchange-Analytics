@@ -2,23 +2,18 @@
     <!-- Base application theme. -->
     <style name="Theme.Jexchange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/greenJex</item>
+        <item name="colorPrimary">@color/darkBlueLogo</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/blueLogo</item>
+        <item name="colorSecondaryVariant">@color/blueLogo</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/greenJex</item>
+        <item name="android:statusBarColor" >@color/darkBlueLogo</item>
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="materialCardViewStyle">@style/MaterialCardViewStyle</item>
-        <item name="autoCompleteTextViewStyle">@style/AutocompleteStyle</item>
-    </style>
-
-    <style name="AutocompleteStyle" parent="android:Widget.AutoCompleteTextView">
-        <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
     <style name="MaterialCardViewStyle" parent="Widget.MaterialComponents.CardView">
