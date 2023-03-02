@@ -49,7 +49,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_jex_logo"
+                    android:src="@drawable/ic_full_logo"
                     android:contentDescription="@string/jex_logo" />
 
             </com.google.android.material.appbar.MaterialToolbar>
