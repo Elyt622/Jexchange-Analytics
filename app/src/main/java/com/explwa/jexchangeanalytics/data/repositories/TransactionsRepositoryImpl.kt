@@ -62,12 +62,13 @@ class TransactionsRepositoryImpl @Inject constructor(
 
 
     // Get all token used on Jexchange
-    override fun getAllTokensOnJexchange(
+    override fun getAllTokens(
+        address: String,
         size: Int,
         from: Int
     ) : Observable<DomainTokenPage> =
         elrondApi.getAllTokens(
-            JEXCHANGE_SWAP_ACCOUNT,
+            address,
             size,
             from,
             true
@@ -86,7 +87,7 @@ class TransactionsRepositoryImpl @Inject constructor(
             }.toList()
             .toObservable()
             .map {
-                if(getTokensCountOnJexchange().blockingGet() % 10 < it.size )
+                if(getTokensCount(address).blockingGet() % 10 < it.size )
                     DomainTokenPage(
                             it,
                             true
@@ -98,13 +99,11 @@ class TransactionsRepositoryImpl @Inject constructor(
                         )
             }
 
-    override fun getTokensCountOnJexchange()
-    : Single<Int> =
+    override fun getTokensCount(
+        address: String
+    ) : Single<Int> =
         elrondApi.getTokensCount(
-            JEXCHANGE_SWAP_ACCOUNT
+            address
         )
 
-    companion object {
-        const val JEXCHANGE_SWAP_ACCOUNT = "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2"
-    }
  }

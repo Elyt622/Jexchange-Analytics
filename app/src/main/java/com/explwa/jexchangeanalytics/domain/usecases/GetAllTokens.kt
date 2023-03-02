@@ -14,6 +14,7 @@ class GetAllTokens @Inject constructor(
     private var from = -10
 
     fun invoke(
+        address: String,
         refresh: Boolean = false
     ): Observable<List<DomainTokenPage>> =
         Observable.defer {
@@ -23,7 +24,8 @@ class GetAllTokens @Inject constructor(
             } else {
                 from += 10
             }
-            repository.getAllTokensOnJexchange(
+            repository.getAllTokens(
+                address,
                 10,
                 from
             )

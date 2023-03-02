@@ -41,6 +41,7 @@ class MarketplaceViewModel @Inject constructor(
             .toObservable()
             .concatMap {
                 usecase.invoke(
+                    JEXCHANGE_SWAP_ACCOUNT,
                     it
                 ).subscribeOn(mySchedulers.io)
             }.observeOn(mySchedulers.main)
@@ -52,4 +53,8 @@ class MarketplaceViewModel @Inject constructor(
                 ShowError(it.message.toString())
             }
 
+    companion object {
+        const val JEXCHANGE_SWAP_ACCOUNT =
+            "erd1qqqqqqqqqqqqqpgqawkm2tlyyz6vtg02fcr5w02dyejp8yrw0y8qlucnj2"
+    }
 }

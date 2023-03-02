@@ -21,13 +21,15 @@ interface TransactionsRepository {
         token: String
     ) : Single<Int>
 
-    fun getAllTokensOnJexchange(
+    fun getAllTokens(
+        address: String,
         size: Int,
         from: Int
     ) : Observable<DomainTokenPage>
 
-    fun getTokensCountOnJexchange()
-    : Single<Int>
+    fun getTokensCount(
+        address: String
+    ) : Single<Int>
 
     fun getTransactionWithHash(txHash: String)
     : Single<DomainTransaction>
