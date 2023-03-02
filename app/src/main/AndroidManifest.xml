@@ -14,7 +14,7 @@
         android:roundIcon="@drawable/ic_logo"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Jexchange"
+        android:theme="@style/Theme.JexchangeAnalytics"
         tools:targetApi="31">
         <activity
             android:name=".app.module.splashScreen.SplashScreenActivity"
