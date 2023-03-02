@@ -9,5 +9,6 @@
     <color name="nightBar">#232937</color>
     <color name="blueLogo">#1cdaff</color>
     <color name="darkBlueLogo">#004aad</color>
+    <color name="blackBackground">#101216</color>
 
 </resources>
