@@ -1,5 +1,6 @@
 package com.explwa.jexchangeanalytics.data.repositories
 
+import android.util.Log
 import com.explwa.jexchangeanalytics.data.network.api.ElrondApi
 import com.explwa.jexchangeanalytics.data.network.api.JexchangeService
 import com.explwa.jexchangeanalytics.domain.models.DomainTokenPage
@@ -74,14 +75,15 @@ class TransactionsRepositoryImpl @Inject constructor(
             true
         )
             .concatMapIterable { it }
-            .filter { it.identifier != "BUSD-40b57e" && it.identifier != "USDT-f8c08c"}
             .map { token ->
                 if (token.price != null)
                     token.toDomain()
                 else {
                     token.price = getTokenPrice(
                         token.identifier.toString()
-                    ).blockingGet() // Bad I think but it work for now
+                    ).doOnError { Log.d("DEBUG", token.identifier.toString()) }
+                        .onErrorReturnItem(0.0)
+                        .blockingGet() // Bad I think but it work for now
                     token.toDomain()
                 }
             }.toList()
