@@ -50,6 +50,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
+                android:backgroundTint="@color/blueLogo"
                 android:gravity="center"
                 android:hint="@string/herotag"
                 android:importantForAutofill="no"
