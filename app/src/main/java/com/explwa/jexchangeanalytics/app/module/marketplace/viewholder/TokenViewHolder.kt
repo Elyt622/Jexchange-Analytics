@@ -1,6 +1,7 @@
 package com.explwa.jexchangeanalytics.app.module.marketplace.viewholder
 
 import android.content.Intent
+import androidx.core.view.isGone
 import com.bumptech.glide.Glide
 import com.explwa.jexchangeanalytics.app.module.marketplace.utils.Utils
 import com.explwa.jexchangeanalytics.app.module.token.activity.TokenActivity
@@ -16,7 +17,19 @@ class TokenViewHolder(
     override fun onBind(item: UITokenItem) {
         if (item is UITokenItem.Cell) {
             with(binding) {
-                Glide.with(root.context).load(item.pngUrl).into(imageViewToken)
+
+                if (item.pngUrl != null) {
+                    Glide.with(root.context).load(item.pngUrl).into(imageViewToken)
+                    textviewTokenName.setPadding(0,0,0,0)
+                    textviewTokenId.setPadding(0,0,0,0)
+                    imageViewToken.isGone = false
+                }
+                else {
+                    textviewTokenName.setPadding(24,0,0,0)
+                    textviewTokenId.setPadding(24,0,0,0)
+                    imageViewToken.isGone = true
+                }
+
                 Glide.with(root.context).load(item.pngUrl).into(imageViewLogoBackground)
                 textviewTokenId.text = item.identifier
                 textviewPriceToken.text = Utils.toFormatString(item.price.toString())
