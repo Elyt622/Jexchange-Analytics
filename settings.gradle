@@ -10,8 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
-rootProject.name = "Jexchange"
+rootProject.name = "Jexchange Analytics"
 include ':app'
-include ':erdkotlin'
