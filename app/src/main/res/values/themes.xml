@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/blueLogo</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/darkBlueLogo</item>
+        <item name="android:statusBarColor" >@color/white</item>
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="materialCardViewStyle">@style/MaterialCardViewStyle</item>
